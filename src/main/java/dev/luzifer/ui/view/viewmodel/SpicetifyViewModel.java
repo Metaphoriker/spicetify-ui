@@ -12,13 +12,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.java.Log;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-@Log4j2
+@Log
 public class SpicetifyViewModel implements ViewModel {
 
   private static final String SPICETIFY_UPDATE_COMMAND = "spicetify update";
@@ -96,7 +96,8 @@ public class SpicetifyViewModel implements ViewModel {
       Process process = createProcess(command);
       startNewThread(process);
     } catch (Exception e) {
-      log.error("Error while executing command: {}", command, e);
+      log.severe("Failed to execute command: " + command);
+      throw new RuntimeException(e);
     }
   }
 

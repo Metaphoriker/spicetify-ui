@@ -2,17 +2,16 @@ package dev.luzifer;
 
 import dev.luzifer.ui.SpicetifyClient;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.java.Log;
 
+import javax.swing.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Log4j2
+@Log
 public class Main {
 
   private static final Path APPDATA_FOLDER = Path.of(System.getenv("APPDATA"));
@@ -22,20 +21,17 @@ public class Main {
   public static void main(String[] args) {
     if (!SPICETIFY_THEMES_FOLDER.toFile().exists()) sendDialogAndClose();
 
-    log.info("Themes folder found in {}, starting application..", SPICETIFY_THEMES_FOLDER);
+    log.info("Starting Spicetify client");
     Application.launch(SpicetifyClient.class, args);
   }
 
   private static void sendDialogAndClose() {
-    log.error("Themes folder not found in {}", SPICETIFY_THEMES_FOLDER);
-    Platform.runLater(
-        () -> {
-          Alert alert = new Alert(Alert.AlertType.ERROR);
-          alert.setTitle("Error Dialog");
-          alert.setHeaderText(null);
-          alert.setContentText("Themes folder not found in " + SPICETIFY_THEMES_FOLDER);
-          alert.showAndWait();
-        });
+    log.severe("Spicetify themes folder not found in " + SPICETIFY_THEMES_FOLDER);
+    JOptionPane.showMessageDialog(
+        null,
+        "Spicetify themes folder not found in " + SPICETIFY_THEMES_FOLDER,
+        "Error",
+        JOptionPane.ERROR_MESSAGE);
     System.exit(1);
   }
 
