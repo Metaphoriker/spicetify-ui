@@ -1,0 +1,63 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #0077be, #0d0d0d);
+}
+
+.button {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #0077be;
+    -fx-border-color: #0077be;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #0077be;
+    -fx-text-fill: #1a1a1a;
+}
+
+.label {
+    -fx-text-fill: #0077be;
+}
+
+.choice-box {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #0077be;
+    -fx-border-color: #0077be;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #1a1a1a;
+}
+
+.choice-box .context-menu .menu-item {
+    -fx-text-fill: #0077be;
+}
+
+.choice-box .context-menu .menu-item:hover {
+    -fx-background-color: #0077be;
+    -fx-text-fill: #1a1a1a;
+}
+
+.check-box {
+    -fx-text-fill: #0077be;
+}
+
+.check-box-box {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #0077be;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.progress-bar {
+    -fx-accent: #0077be;
+    -fx-background-color: #1a1a1a;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #0077be;
+}
