@@ -17,6 +17,8 @@ import lombok.extern.java.Log;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 @Log
 public class SpicetifyViewModel implements ViewModel {
@@ -24,12 +26,23 @@ public class SpicetifyViewModel implements ViewModel {
   private static final String SPICETIFY_UPDATE_COMMAND = "spicetify update";
   private static final String SPICETIFY_APPLY_COMMAND = "spicetify apply";
   private static final String SPICETIFY_THEME_COMMAND = "spicetify config current_theme ";
+  private static final String SPICETIFY_INSTALL_WINDOWS_COMMAND =
+      "iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1 | iex";
+  private static final String SPICETIFY_INSTALL_WINDOWS_MARKETPLACE_COMMAND =
+      "iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.ps1 | iex";
+  private static final String SPICETIFY_INSTALL_OTHER_COMMAND =
+      "curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.sh | sh";
+  private static final String SPICETIFY_INSTALL_OTHER_MARKETPLACE_COMMAND =
+      "curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.sh | sh";
+
+  private static final Executor EXECUTOR = Executors.newWorkStealingPool();
 
   private final StringProperty currentThemeProperty = new SimpleStringProperty();
-  private final DoubleProperty applyProgressProperty = new SimpleDoubleProperty(0);
-  private final IntegerProperty applyProgressMaxProperty = new SimpleIntegerProperty(0);
+  private final DoubleProperty progressProperty = new SimpleDoubleProperty(0);
+  private final IntegerProperty progressMaxProperty = new SimpleIntegerProperty(0);
   private final BooleanProperty updateBeforeApplyProperty = new SimpleBooleanProperty(true);
   private final BooleanProperty notInstalledProperty = new SimpleBooleanProperty(false);
+  private final BooleanProperty marketplaceProperty = new SimpleBooleanProperty(false);
 
   private int progressCount = 0;
 
@@ -46,11 +59,15 @@ public class SpicetifyViewModel implements ViewModel {
     }
     setCurrentTheme();
     applySpicetify();
-    resetProgress();
+  }
+
+  public void resetProgress() {
+    progressCount = 0;
+    progressProperty.set(0);
   }
 
   public void checkSpicetifyInstalled() {
-    notInstalledProperty.set(!Main.doesSpicetifyExist());
+    notInstalledProperty.set(!Main.isSpicetifyInstalled());
   }
 
   public BooleanProperty updateBeforeApplyProperty() {
@@ -61,12 +78,16 @@ public class SpicetifyViewModel implements ViewModel {
     return notInstalledProperty;
   }
 
-  public DoubleProperty applyProgressProperty() {
-    return applyProgressProperty;
+  public DoubleProperty progressPropertty() {
+    return progressProperty;
   }
 
   public StringProperty currentThemeProperty() {
     return currentThemeProperty;
+  }
+
+  public BooleanProperty marketplaceProperty() {
+    return marketplaceProperty;
   }
 
   private void setCurrentTheme() {
@@ -83,27 +104,52 @@ public class SpicetifyViewModel implements ViewModel {
   }
 
   private void increaseProgress() {
-    var maxValue = applyProgressMaxProperty.get();
-    applyProgressProperty.set((double) ++progressCount / maxValue);
-  }
-
-  private void resetProgress() {
-    applyProgressProperty.set(0.0);
-    progressCount = 0;
+    var maxValue = progressMaxProperty.get();
+    progressProperty.set((double) ++progressCount / maxValue);
   }
 
   private void determineMaxProgress() {
     if (updateBeforeApplyProperty.get()) {
-      applyProgressMaxProperty.set(3);
+      progressMaxProperty.set(3);
     } else {
-      applyProgressMaxProperty.set(2);
+      progressMaxProperty.set(2);
+    }
+  }
+
+  private boolean isWindows() {
+    return System.getProperty("os.name").toLowerCase().contains("windows");
+  }
+
+  public void install() {
+    progressMaxProperty.set(2);
+    increaseProgress();
+
+    if (isWindows()) {
+      executeCommand(
+          marketplaceProperty.get()
+              ? SPICETIFY_INSTALL_WINDOWS_MARKETPLACE_COMMAND
+              : SPICETIFY_INSTALL_WINDOWS_COMMAND);
+    } else {
+      executeCommand(
+          marketplaceProperty.get()
+              ? SPICETIFY_INSTALL_OTHER_MARKETPLACE_COMMAND
+              : SPICETIFY_INSTALL_OTHER_COMMAND);
     }
   }
 
   private void executeCommand(String command) {
     try {
       Process process = createProcess(command);
-      startNewThread(process);
+      EXECUTOR.execute(
+          () -> {
+            try {
+              process.waitFor();
+              increaseProgress();
+            } catch (InterruptedException e) {
+              log.severe("Failed to execute command: " + command);
+              throw new RuntimeException(e);
+            }
+          });
     } catch (Exception e) {
       log.severe("Failed to execute command: " + command);
       throw new RuntimeException(e);
@@ -113,18 +159,5 @@ public class SpicetifyViewModel implements ViewModel {
   private Process createProcess(String command) throws IOException {
     ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
     return processBuilder.start();
-  }
-
-  private void startNewThread(Process process) {
-    new Thread(
-            () -> {
-              try {
-                process.waitFor();
-                increaseProgress();
-              } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-              }
-            })
-        .start();
   }
 }

@@ -1,121 +1,63 @@
 .root {
-    -fx-background-color: linear-gradient(to bottom, #0077be, #0d0d0d);
+    -fx-font-size: 14px;
+    -fx-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -fx-base: #ffffff;
+    -fx-background: #f0f0f0;
 }
 
 .button {
-    -fx-background-color: #1a1a1a;
-    -fx-text-fill: #0077be;
-    -fx-border-color: #0077be;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-background-color: #007aff;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
 
-.button:hover {
-    -fx-background-color: #0077be;
-    -fx-text-fill: #1a1a1a;
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #c7c7cc;
+    -fx-border-radius: 4;
 }
 
 .label {
-    -fx-text-fill: #0077be;
+    -fx-text-fill: #000000;
 }
 
-.choice-box {
-    -fx-background-color: #1a1a1a;
-    -fx-text-fill: #0077be;
-    -fx-border-color: #0077be;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+.header-text.label {
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #000000;
+    -fx-padding: 10;
 }
 
-.choice-box .context-menu {
-    -fx-background-color: #1a1a1a;
+.menu-bar {
+    -fx-background-color: #f8f8f7;
 }
 
-.choice-box .context-menu .menu-item {
-    -fx-text-fill: #0077be;
-}
-
-.choice-box .context-menu .menu-item:hover {
-    -fx-background-color: #0077be;
-    -fx-text-fill: #1a1a1a;
-}
-
-.check-box {
-    -fx-text-fill: #0077be;
-}
-
-.check-box-box {
-    -fx-background-color: #1a1a1a;
-    -fx-border-color: #0077be;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+.menu {
+    -fx-text-fill: #007aff;
 }
 
 .progress-bar {
-    -fx-accent: #0077be;
-    -fx-background-color: #1a1a1a;
+    -fx-accent: #007aff; /* Set the progress bar color */
 }
 
-.separator *.line {
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: #0077be;
+.choice-box {
+    -fx-background-color: white;
+    -fx-border-color: #c7c7cc;
+    -fx-border-radius: 4;
+    -fx-padding: 5;
 }
 
-.not-installed {
-    -fx-background-color: linear-gradient(to bottom, #ff0000, #0d0d0d);
+.choice-box .label {
+    -fx-text-fill: #000000;
 }
 
-.not-installed .button {
-    -fx-background-color: #1a1a1a;
-    -fx-text-fill: #ff0000;
-    -fx-border-color: #ff0000;
+.check-box {
+    -fx-text-fill: #000000;
 }
 
-.not-installed .button:hover {
-    -fx-background-color: #ff0000;
-    -fx-text-fill: #1a1a1a;
+.check-box .box {
+    -fx-border-color: #007aff;
 }
 
-.not-installed .label {
-    -fx-text-fill: #ff0000;
-}
-
-.not-installed .choice-box {
-    -fx-background-color: #1a1a1a;
-    -fx-text-fill: #ff0000;
-    -fx-border-color: #ff0000;
-}
-
-.not-installed .choice-box .context-menu {
-    -fx-background-color: #1a1a1a;
-}
-
-.not-installed .choice-box .context-menu .menu-item {
-    -fx-text-fill: #ff0000;
-}
-
-.not-installed .choice-box .context-menu .menu-item:hover {
-    -fx-background-color: #ff0000;
-    -fx-text-fill: #1a1a1a;
-}
-
-.not-installed .check-box {
-    -fx-text-fill: #ff0000;
-}
-
-.not-installed .check-box-box {
-    -fx-background-color: #1a1a1a;
-    -fx-border-color: #ff0000;
-}
-
-.not-installed .progress-bar {
-    -fx-accent: #ff0000;
-    -fx-background-color: #1a1a1a;
-}
-
-.not-installed .separator *.line {
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: #ff0000;
-}

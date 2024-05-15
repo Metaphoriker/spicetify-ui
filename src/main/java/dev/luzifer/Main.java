@@ -19,27 +19,11 @@ public class Main {
   private static final Path SPICETIFY_THEMES_FOLDER = SPICETIFY_PATH.resolve("Themes");
 
   public static void main(String[] args) {
-    if (!SPICETIFY_THEMES_FOLDER.toFile().exists()) sendDialogAndClose();
-
     log.info("Starting Spicetify client");
     Application.launch(SpicetifyClient.class, args);
   }
 
-  private static void sendDialogAndClose() {
-    log.severe("Spicetify themes folder not found in " + SPICETIFY_THEMES_FOLDER);
-    JOptionPane.showMessageDialog(
-        null,
-        "Spicetify themes folder not found in " + SPICETIFY_THEMES_FOLDER,
-        "Error",
-        JOptionPane.ERROR_MESSAGE);
-    System.exit(1);
-  }
-
-  private static boolean isWindows() {
-    return System.getProperty("os.name").toLowerCase().contains("windows");
-  }
-
-  public static boolean doesSpicetifyExist() {
+  public static boolean isSpicetifyInstalled() {
     return SPICETIFY_PATH.toFile().exists();
   }
 

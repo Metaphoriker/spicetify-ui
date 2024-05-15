@@ -23,10 +23,14 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   private static final String ICON_PATH = "/icon.png";
 
   @FXML private Circle iconShape;
+  @FXML private Circle iconShape1;
   @FXML private ChoiceBox<String> themeBox;
   @FXML private CheckBox updateCheckBox;
+  @FXML private CheckBox marketplaceCheckBox;
   @FXML private ProgressBar applyProgressBar;
+  @FXML private ProgressBar installProgressBar;
   @FXML private VBox notInstalledVBox;
+  @FXML private VBox installedVBox;
   @FXML private Label notInstalledLabel;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
@@ -37,7 +41,6 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   public void initialize(URL url, ResourceBundle resourceBundle) {
     super.initialize(url, resourceBundle);
     getViewModel().checkSpicetifyInstalled();
-    changeStyleIfNotInstalled();
     bindProperties();
     addListeners();
     setIcon();
@@ -51,29 +54,26 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   }
 
   @FXML
-  void onInstall(ActionEvent event) {}
-
-  private void changeStyleIfNotInstalled() {
-    if (getViewModel().notInstalledProperty().get()) {
-      notInstalledVBox.getStyleClass().add("not-installed");
-    } else {
-      notInstalledVBox.getStyleClass().remove("not-installed");
-    }
+  void onInstall(ActionEvent event) {
+    getViewModel().install();
+    getViewModel().checkSpicetifyInstalled();
   }
 
   private void setNotInstalledLabelText() {
-    notInstalledLabel.setText("You seem to not have Spicetify installed. Wanna install it now?"); // TODO: later from messages.properties
+    notInstalledLabel.setText("You seem to not have Spicetify installed"); // TODO: later from messages.properties
   }
 
   private void bindProperties() {
     themeBox.valueProperty().bindBidirectional(getViewModel().currentThemeProperty());
     updateCheckBox.selectedProperty().bindBidirectional(getViewModel().updateBeforeApplyProperty());
     notInstalledVBox.visibleProperty().bind(getViewModel().notInstalledProperty());
+    installedVBox.visibleProperty().bind(getViewModel().notInstalledProperty().not());
+    marketplaceCheckBox.selectedProperty().bindBidirectional(getViewModel().marketplaceProperty());
   }
 
   private void addListeners() {
     getViewModel()
-        .applyProgressProperty()
+        .progressPropertty()
         .addListener(
             (_, _, progress) ->
                 Platform.runLater(() -> setProgress(progress)));
@@ -81,11 +81,16 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
 
   private void setProgress(Number progress) {
     applyProgressBar.setProgress(progress.doubleValue());
-    if (progress.doubleValue() == 1) applyProgressBar.setProgress(0);
+    installProgressBar.setProgress(progress.doubleValue());
+    if (progress.doubleValue() >= 1.0) {
+      getViewModel().resetProgress();
+    }
   }
 
   private void setIcon() {
-    iconShape.setFill(getIcon());
+    ImagePattern icon = getIcon();
+    iconShape.setFill(icon);
+    iconShape1.setFill(icon);
   }
 
   private void setThemeBoxItems() {
