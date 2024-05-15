@@ -1,13 +1,16 @@
 package dev.luzifer.ui.view.viewmodel;
 
 import dev.luzifer.Main;
+import dev.luzifer.model.FileSystemWatcher;
 import dev.luzifer.ui.view.ViewModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -19,14 +22,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
+// TODO: Add file watcher for theme folder to update theme list
 @Log
 public class SpicetifyViewModel implements ViewModel {
 
   private static final String SPICETIFY_UPDATE_COMMAND = "spicetify update";
   private static final String SPICETIFY_APPLY_COMMAND = "spicetify apply";
+  private static final String SPICETIFY_BACKUP_APPLY_COMMAND = "spicetify backup apply";
   private static final String SPICETIFY_THEME_COMMAND = "spicetify config current_theme ";
   private static final String SPICETIFY_INSTALL_WINDOWS_COMMAND =
       "iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1 | iex";
@@ -45,13 +52,24 @@ public class SpicetifyViewModel implements ViewModel {
   private final BooleanProperty updateBeforeApplyProperty = new SimpleBooleanProperty(true);
   private final BooleanProperty notInstalledProperty = new SimpleBooleanProperty(false);
   private final BooleanProperty marketplaceProperty = new SimpleBooleanProperty(false);
+  private final ObjectProperty<ObservableList<String>> themesProperty =
+      new SimpleObjectProperty<>(getThemes());
 
   private int progressCount = 0;
 
-  public ObservableList<String> getThemes() {
+  private ObservableList<String> getThemes() {
     List<Path> themes = Main.getThemes();
     return FXCollections.observableList(
         themes.stream().map(Path::getFileName).map(Path::toString).toList());
+  }
+
+  public void reloadThemes() {
+    themesProperty.set(FXCollections.observableList(getThemes()));
+  }
+
+  public void setupFileWatcher(Consumer<String> callback) {
+    FileSystemWatcher fileSystemWatcher = new FileSystemWatcher(callback);
+    CompletableFuture.runAsync(fileSystemWatcher, EXECUTOR);
   }
 
   public void applyTheme() {
@@ -61,6 +79,14 @@ public class SpicetifyViewModel implements ViewModel {
     }
     setCurrentTheme();
     applySpicetify();
+  }
+
+  public void saveTheme() {
+    Main.setLastTheme(currentThemeProperty.get());
+  }
+
+  public String getTheme() {
+    return currentThemeProperty.get();
   }
 
   public void resetProgress() {
@@ -90,6 +116,10 @@ public class SpicetifyViewModel implements ViewModel {
 
   public BooleanProperty marketplaceProperty() {
     return marketplaceProperty;
+  }
+
+  public ObjectProperty<ObservableList<String>> themesProperty() {
+    return themesProperty;
   }
 
   private void setCurrentTheme() {
@@ -123,39 +153,53 @@ public class SpicetifyViewModel implements ViewModel {
   }
 
   public void install() {
-    progressMaxProperty.set(2);
+    progressMaxProperty.set(3);
     increaseProgress();
 
+    String command;
     if (isWindows()) {
-      executeCommand(
+      command =
           marketplaceProperty.get()
               ? SPICETIFY_INSTALL_WINDOWS_MARKETPLACE_COMMAND
-              : SPICETIFY_INSTALL_WINDOWS_COMMAND);
+              : SPICETIFY_INSTALL_WINDOWS_COMMAND;
     } else {
-      executeCommand(
+      command =
           marketplaceProperty.get()
               ? SPICETIFY_INSTALL_OTHER_MARKETPLACE_COMMAND
-              : SPICETIFY_INSTALL_OTHER_COMMAND);
+              : SPICETIFY_INSTALL_OTHER_COMMAND;
     }
+
+    executeCommand(command, this::afterInstall);
+  }
+
+  private void afterInstall() {
+    executeCommand(SPICETIFY_BACKUP_APPLY_COMMAND);
+    checkSpicetifyInstalled();
   }
 
   private void executeCommand(String command) {
+    executeCommand(command, () -> {});
+  }
+
+  private void executeCommand(String command, Runnable callback) {
     try {
       Process process = createProcess(command);
       log.info("Executing command: " + command);
-      EXECUTOR.execute(
-          () -> {
-            try {
-              process.waitFor();
-              logOutput(process);
-              increaseProgress();
-            } catch (InterruptedException e) {
-              log.severe("Failed to execute command: " + command);
-              throw new RuntimeException(e);
-            } catch (IOException e) {
-              throw new RuntimeException(e);
-            }
-          });
+      CompletableFuture.runAsync(
+              () -> {
+                try {
+                  process.waitFor();
+                  logOutput(process);
+                  increaseProgress();
+                } catch (InterruptedException e) {
+                  log.severe("Failed to execute command: " + command);
+                  throw new RuntimeException(e);
+                } catch (IOException e) {
+                  throw new RuntimeException(e);
+                }
+              },
+              EXECUTOR)
+          .thenRun(callback);
     } catch (Exception e) {
       log.severe("Failed to execute command: " + command);
       throw new RuntimeException(e);

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -38,10 +39,15 @@
                   </children>
               </VBox>
               <Separator prefWidth="200.0" />
-              <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="350.0" spacing="80.0">
+              <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="350.0" spacing="10.0">
                   <children>
-                      <ProgressBar fx:id="applyProgressBar" prefHeight="23.0" prefWidth="218.0" progress="0.0" />
-                      <Button mnemonicParsing="false" onAction="#onApply" prefWidth="100" text="Apply" />
+                  <HBox alignment="CENTER" prefHeight="47.0" prefWidth="287.0" spacing="10.0">
+                     <children>
+                            <ProgressBar fx:id="applyProgressBar" prefHeight="23.0" prefWidth="218.0" progress="0.0" />
+                        <ImageView fx:id="loadingSpinnerImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
+                      <Button mnemonicParsing="false" onAction="#onApply" prefHeight="31.0" prefWidth="97.0" text="Apply" />
                   </children>
                   <padding>
                       <Insets left="10.0" right="10.0" />

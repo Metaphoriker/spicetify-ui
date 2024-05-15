@@ -11,6 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -32,6 +33,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private VBox notInstalledVBox;
   @FXML private VBox installedVBox;
   @FXML private Label notInstalledLabel;
+  @FXML private ImageView loadingSpinnerImageView;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
@@ -41,10 +43,12 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   public void initialize(URL url, ResourceBundle resourceBundle) {
     super.initialize(url, resourceBundle);
     getViewModel().checkSpicetifyInstalled();
+    getViewModel().setupFileWatcher(_ -> Platform.runLater(() -> getViewModel().reloadThemes()));
     bindProperties();
     addListeners();
     setIcon();
-    setThemeBoxItems();
+    setLoadingSpinner();
+    setupThemeBox();
     setNotInstalledLabelText();
   }
 
@@ -56,7 +60,6 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML
   void onInstall(ActionEvent event) {
     getViewModel().install();
-    getViewModel().checkSpicetifyInstalled();
   }
 
   private void setNotInstalledLabelText() {
@@ -65,10 +68,12 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
 
   private void bindProperties() {
     themeBox.valueProperty().bindBidirectional(getViewModel().currentThemeProperty());
+    themeBox.itemsProperty().bind(getViewModel().themesProperty());
     updateCheckBox.selectedProperty().bindBidirectional(getViewModel().updateBeforeApplyProperty());
     notInstalledVBox.visibleProperty().bind(getViewModel().notInstalledProperty());
     installedVBox.visibleProperty().bind(getViewModel().notInstalledProperty().not());
     marketplaceCheckBox.selectedProperty().bindBidirectional(getViewModel().marketplaceProperty());
+    loadingSpinnerImageView.visibleProperty().bind(getViewModel().progressPropertty().greaterThan(0));
   }
 
   private void addListeners() {
@@ -77,6 +82,10 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
         .addListener(
             (_, _, progress) ->
                 Platform.runLater(() -> setProgress(progress)));
+    themeBox
+        .valueProperty()
+        .addListener(
+            (_, _, _) -> getViewModel().saveTheme());
   }
 
   private void setProgress(Number progress) {
@@ -93,10 +102,18 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     iconShape1.setFill(icon);
   }
 
-  private void setThemeBoxItems() {
-    themeBox.setItems(getViewModel().getThemes());
-    if (!themeBox.getItems().isEmpty())
-      themeBox.setValue(themeBox.getItems().getFirst());
+  private void setLoadingSpinner() {
+    loadingSpinnerImageView.setImage(new Image(Main.class.getResourceAsStream("/loading.gif")));
+  }
+
+  private void setupThemeBox() {
+    String lastTheme = getViewModel().getTheme();
+    if (lastTheme == null) {
+      if(!themeBox.getItems().isEmpty())
+        themeBox.setValue(themeBox.getItems().getFirst());
+      return;
+    }
+    themeBox.setValue(getViewModel().getTheme());
   }
 
   private ImagePattern getIcon() {
