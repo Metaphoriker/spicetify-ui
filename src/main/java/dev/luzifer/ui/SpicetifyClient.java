@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class SpicetifyClient extends Application {
 
   @Override
-  public void start(Stage stage) throws Exception {
+  public void start(Stage stage) {
     ViewController viewController = new ViewController();
     viewController.showView(new SpicetifyView(new SpicetifyViewModel()));
   }

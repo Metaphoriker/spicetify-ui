@@ -97,26 +97,28 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   }
 
   private void setIcon() {
-    ImagePattern icon = getIcon();
+    ImagePattern icon = createIcon();
     iconShape.setFill(icon);
     iconShape1.setFill(icon);
   }
 
   private void setLoadingSpinner() {
-    loadingSpinnerImageView.setImage(new Image(Main.class.getResourceAsStream("/loading.gif")));
+    loadingSpinnerImageView.setImage(createLoadingSpinner());
   }
 
   private void setupThemeBox() {
-    String lastTheme = getViewModel().getTheme();
-    if (lastTheme == null) {
-      if(!themeBox.getItems().isEmpty())
-        themeBox.setValue(themeBox.getItems().getFirst());
-      return;
+    String theme = getViewModel().getTheme();
+    if (theme == null && !themeBox.getItems().isEmpty()) {
+      theme = themeBox.getItems().get(0);
     }
-    themeBox.setValue(getViewModel().getTheme());
+    themeBox.setValue(theme);
   }
 
-  private ImagePattern getIcon() {
+  private Image createLoadingSpinner() {
+    return new Image(Main.class.getResourceAsStream("/loading.gif"));
+  }
+
+  private ImagePattern createIcon() {
     return new ImagePattern(new Image(Main.class.getResourceAsStream(ICON_PATH)));
   }
 }

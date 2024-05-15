@@ -17,17 +17,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.extern.java.Log;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
-// TODO: Add file watcher for theme folder to update theme list
 @Log
 public class SpicetifyViewModel implements ViewModel {
 
@@ -44,8 +39,6 @@ public class SpicetifyViewModel implements ViewModel {
   private static final String SPICETIFY_INSTALL_OTHER_MARKETPLACE_COMMAND =
       "curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.sh | sh";
 
-  private static final Executor EXECUTOR = Executors.newWorkStealingPool();
-
   private final StringProperty currentThemeProperty = new SimpleStringProperty();
   private final DoubleProperty progressProperty = new SimpleDoubleProperty(0);
   private final IntegerProperty progressMaxProperty = new SimpleIntegerProperty(0);
@@ -54,6 +47,8 @@ public class SpicetifyViewModel implements ViewModel {
   private final BooleanProperty marketplaceProperty = new SimpleBooleanProperty(false);
   private final ObjectProperty<ObservableList<String>> themesProperty =
       new SimpleObjectProperty<>(getThemes());
+
+  private final CommandExecutor commandExecutor = new CommandExecutor();
 
   private int progressCount = 0;
 
@@ -69,7 +64,7 @@ public class SpicetifyViewModel implements ViewModel {
 
   public void setupFileWatcher(Consumer<String> callback) {
     FileSystemWatcher fileSystemWatcher = new FileSystemWatcher(callback);
-    CompletableFuture.runAsync(fileSystemWatcher, EXECUTOR);
+    CompletableFuture.runAsync(fileSystemWatcher, Executors.newSingleThreadExecutor());
   }
 
   public void applyTheme() {
@@ -124,32 +119,15 @@ public class SpicetifyViewModel implements ViewModel {
 
   private void setCurrentTheme() {
     String command = SPICETIFY_THEME_COMMAND + currentThemeProperty.get();
-    executeCommand(command);
+    commandExecutor.executeCommand(command);
   }
 
   private void updateSpicetify() {
-    executeCommand(SPICETIFY_UPDATE_COMMAND);
+    commandExecutor.executeCommand(SPICETIFY_UPDATE_COMMAND);
   }
 
   private void applySpicetify() {
-    executeCommand(SPICETIFY_APPLY_COMMAND);
-  }
-
-  private void increaseProgress() {
-    var maxValue = progressMaxProperty.get();
-    progressProperty.set((double) ++progressCount / maxValue);
-  }
-
-  private void determineMaxProgress() {
-    if (updateBeforeApplyProperty.get()) {
-      progressMaxProperty.set(3);
-    } else {
-      progressMaxProperty.set(2);
-    }
-  }
-
-  private boolean isWindows() {
-    return System.getProperty("os.name").toLowerCase().contains("windows");
+    commandExecutor.executeCommand(SPICETIFY_APPLY_COMMAND);
   }
 
   public void install() {
@@ -157,7 +135,7 @@ public class SpicetifyViewModel implements ViewModel {
     increaseProgress();
 
     String command;
-    if (isWindows()) {
+    if (Main.isWindows()) {
       command =
           marketplaceProperty.get()
               ? SPICETIFY_INSTALL_WINDOWS_MARKETPLACE_COMMAND
@@ -169,64 +147,20 @@ public class SpicetifyViewModel implements ViewModel {
               : SPICETIFY_INSTALL_OTHER_COMMAND;
     }
 
-    executeCommand(command, this::afterInstall);
+    commandExecutor.executeCommand(command, this::afterInstall);
   }
 
   private void afterInstall() {
-    executeCommand(SPICETIFY_BACKUP_APPLY_COMMAND);
+    commandExecutor.executeCommand(SPICETIFY_BACKUP_APPLY_COMMAND);
     checkSpicetifyInstalled();
   }
 
-  private void executeCommand(String command) {
-    executeCommand(command, () -> {});
+  private void increaseProgress() {
+    var maxValue = progressMaxProperty.get();
+    progressProperty.set((double) ++progressCount / maxValue);
   }
 
-  private void executeCommand(String command, Runnable callback) {
-    try {
-      Process process = createProcess(command);
-      log.info("Executing command: " + command);
-      CompletableFuture.runAsync(
-              () -> {
-                try {
-                  process.waitFor();
-                  logOutput(process);
-                  increaseProgress();
-                } catch (InterruptedException e) {
-                  log.severe("Failed to execute command: " + command);
-                  throw new RuntimeException(e);
-                } catch (IOException e) {
-                  throw new RuntimeException(e);
-                }
-              },
-              EXECUTOR)
-          .thenRun(callback);
-    } catch (Exception e) {
-      log.severe("Failed to execute command: " + command);
-      throw new RuntimeException(e);
-    }
-  }
-
-  private Process createProcess(String command) throws IOException {
-    ProcessBuilder processBuilder = new ProcessBuilder(prepareCommand(command));
-    return processBuilder.start();
-  }
-
-  private void logOutput(Process process) throws IOException {
-    try (BufferedReader reader =
-        new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-      String line;
-      log.info("Output of the command is:");
-      while ((line = reader.readLine()) != null) {
-        System.out.println(line);
-      }
-    }
-  }
-
-  private List<String> prepareCommand(String command) {
-    if (isWindows()) {
-      return List.of("powershell.exe", "-Command", command);
-    } else {
-      return List.of(command.split(" "));
-    }
+  private void determineMaxProgress() {
+    progressMaxProperty.set(updateBeforeApplyProperty.get() ? 3 : 2);
   }
 }
