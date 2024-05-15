@@ -29,6 +29,7 @@ public class SpicetifyViewModel implements ViewModel {
   private final DoubleProperty applyProgressProperty = new SimpleDoubleProperty(0);
   private final IntegerProperty applyProgressMaxProperty = new SimpleIntegerProperty(0);
   private final BooleanProperty updateBeforeApplyProperty = new SimpleBooleanProperty(true);
+  private final BooleanProperty notInstalledProperty = new SimpleBooleanProperty(false);
 
   private int progressCount = 0;
 
@@ -48,8 +49,16 @@ public class SpicetifyViewModel implements ViewModel {
     resetProgress();
   }
 
+  public void checkSpicetifyInstalled() {
+    notInstalledProperty.set(!Main.doesSpicetifyExist());
+  }
+
   public BooleanProperty updateBeforeApplyProperty() {
     return updateBeforeApplyProperty;
+  }
+
+  public BooleanProperty notInstalledProperty() {
+    return notInstalledProperty;
   }
 
   public DoubleProperty applyProgressProperty() {

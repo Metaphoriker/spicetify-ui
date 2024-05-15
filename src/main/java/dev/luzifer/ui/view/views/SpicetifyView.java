@@ -8,8 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
@@ -24,6 +26,8 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private ChoiceBox<String> themeBox;
   @FXML private CheckBox updateCheckBox;
   @FXML private ProgressBar applyProgressBar;
+  @FXML private VBox notInstalledVBox;
+  @FXML private Label notInstalledLabel;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
@@ -32,10 +36,13 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     super.initialize(url, resourceBundle);
+    getViewModel().checkSpicetifyInstalled();
+    changeStyleIfNotInstalled();
     bindProperties();
     addListeners();
     setIcon();
     setThemeBoxItems();
+    setNotInstalledLabelText();
   }
 
   @FXML
@@ -43,9 +50,25 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     getViewModel().applyTheme();
   }
 
+  @FXML
+  void onInstall(ActionEvent event) {}
+
+  private void changeStyleIfNotInstalled() {
+    if (getViewModel().notInstalledProperty().get()) {
+      notInstalledVBox.getStyleClass().add("not-installed");
+    } else {
+      notInstalledVBox.getStyleClass().remove("not-installed");
+    }
+  }
+
+  private void setNotInstalledLabelText() {
+    notInstalledLabel.setText("You seem to not have Spicetify installed. Wanna install it now?"); // TODO: later from messages.properties
+  }
+
   private void bindProperties() {
     themeBox.valueProperty().bindBidirectional(getViewModel().currentThemeProperty());
     updateCheckBox.selectedProperty().bindBidirectional(getViewModel().updateBeforeApplyProperty());
+    notInstalledVBox.visibleProperty().bind(getViewModel().notInstalledProperty());
   }
 
   private void addListeners() {

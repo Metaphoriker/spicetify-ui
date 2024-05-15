@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class Main {
 
   private static final Path APPDATA_FOLDER = Path.of(System.getenv("APPDATA"));
-  private static final Path SPICETIFY_THEMES_FOLDER =
-      APPDATA_FOLDER.resolve("spicetify" + File.separator + "Themes");
+  private static final Path SPICETIFY_PATH = APPDATA_FOLDER.resolve("spicetify");
+  private static final Path SPICETIFY_THEMES_FOLDER = SPICETIFY_PATH.resolve("Themes");
 
   public static void main(String[] args) {
     if (!SPICETIFY_THEMES_FOLDER.toFile().exists()) sendDialogAndClose();
@@ -33,6 +33,14 @@ public class Main {
         "Error",
         JOptionPane.ERROR_MESSAGE);
     System.exit(1);
+  }
+
+  private static boolean isWindows() {
+    return System.getProperty("os.name").toLowerCase().contains("windows");
+  }
+
+  public static boolean doesSpicetifyExist() {
+    return SPICETIFY_PATH.toFile().exists();
   }
 
   public static List<Path> getThemes() {
