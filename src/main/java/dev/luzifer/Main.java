@@ -4,7 +4,6 @@ import dev.luzifer.ui.SpicetifyClient;
 import javafx.application.Application;
 import lombok.extern.java.Log;
 
-import javax.swing.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
