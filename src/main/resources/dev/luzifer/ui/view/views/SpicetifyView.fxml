@@ -82,6 +82,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="350.0" spacing="80.0">
                <children>
                   <ProgressBar fx:id="installProgressBar" prefHeight="23.0" prefWidth="350.0" progress="0.0" />
+                  <ImageView fx:id="installLoadingSpinnerImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                </children>
                <padding>
                   <Insets left="10.0" right="10.0" />

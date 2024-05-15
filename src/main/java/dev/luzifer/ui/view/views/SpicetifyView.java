@@ -34,6 +34,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private VBox installedVBox;
   @FXML private Label notInstalledLabel;
   @FXML private ImageView loadingSpinnerImageView;
+  @FXML private ImageView installLoadingSpinnerImageView;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
@@ -74,6 +75,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     installedVBox.visibleProperty().bind(getViewModel().notInstalledProperty().not());
     marketplaceCheckBox.selectedProperty().bindBidirectional(getViewModel().marketplaceProperty());
     loadingSpinnerImageView.visibleProperty().bind(getViewModel().progressPropertty().greaterThan(0));
+    installLoadingSpinnerImageView.visibleProperty().bind(getViewModel().progressPropertty().greaterThan(0));
   }
 
   private void addListeners() {
@@ -103,7 +105,9 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   }
 
   private void setLoadingSpinner() {
-    loadingSpinnerImageView.setImage(createLoadingSpinner());
+    Image loadingSpinner = createLoadingSpinner();
+    loadingSpinnerImageView.setImage(loadingSpinner);
+    installLoadingSpinnerImageView.setImage(loadingSpinner);
   }
 
   private void setupThemeBox() {
