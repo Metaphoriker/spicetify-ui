@@ -2,7 +2,7 @@ name: Build and Attach Spicetify-UI jar to release
 
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   build-and-release:
@@ -38,7 +38,8 @@ jobs:
 
       - name: Prepare Spicetify-UI jar
         run: |
-          mv $(find . -name 'spicetify-ui-*.jar') ./spicetify-ui.jar
+          $jarFile = Get-ChildItem -Path . -Include spicetify-ui-*.jar -Recurse | Select-Object -First 1
+          Move-Item -Path $jarFile.FullName -Destination ./spicetify-ui.jar
 
       - name: Upload Spicetify-UI jar
         uses: actions/upload-artifact@v2
