@@ -1,7 +1,7 @@
 package dev.luzifer.ui.view.viewmodel;
 
 import dev.luzifer.Main;
-import dev.luzifer.ui.view.viewmodel.utils.SpicetifyCommands;
+import dev.luzifer.model.SpicetifyCommands;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.NonNull;

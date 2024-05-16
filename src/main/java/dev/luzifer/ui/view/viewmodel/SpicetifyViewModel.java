@@ -1,7 +1,7 @@
 package dev.luzifer.ui.view.viewmodel;
 
 import dev.luzifer.model.FileSystemWatcher;
-import dev.luzifer.ui.view.viewmodel.utils.SpicetifyCommands;
+import dev.luzifer.model.SpicetifyCommands;
 import dev.luzifer.ui.view.viewmodel.utils.ThemeManager;
 import java.util.function.Consumer;
 import javafx.beans.property.BooleanProperty;
