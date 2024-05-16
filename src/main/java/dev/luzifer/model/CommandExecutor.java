@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 public class CommandExecutor {
 
@@ -25,12 +26,17 @@ public class CommandExecutor {
   }
 
   public void executeCommand(String command, Runnable callback) {
+    executeCommand(command, callback, _ -> {});
+  }
+
+  public void executeCommand(String command, Runnable callback, Consumer<Process> processConsumer) {
     try {
       Process process = createProcess(command);
       CompletableFuture.runAsync(
               () -> {
                 try {
                   process.waitFor();
+                  processConsumer.accept(process);
                   logOutput(process);
                 } catch (InterruptedException | IOException e) {
                   throw new RuntimeException(e);
