@@ -113,3 +113,7 @@
 .check-box .box {
     -fx-border-color: #ff8c00; /* Dark orange */
 }
+
+.loading-spinner {
+    -fx-progress-color: #ff4500; /* Orange red */
+}

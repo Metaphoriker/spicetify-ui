@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,7 +27,6 @@ import java.util.ResourceBundle;
 public class SpicetifyView extends View<SpicetifyViewModel> {
 
   private static final String ICON_PATH = "/spicetify-logo.png";
-  private static final String LOADING_SPINNER_PATH = "/loading.gif";
   private static final String CLOSE_ICON_PATH = "/close.png";
   private static final String THREE_DOTS_ICON_PATH = "/three-dots.png";
 
@@ -35,7 +35,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private ChoiceBox<String> themeBox;
   @FXML private CheckBox updateCheckBox;
   @FXML private ProgressBar applyProgressBar;
-  @FXML private ImageView loadingSpinnerImageView;
+  @FXML private ProgressIndicator progressIndicator;
   @FXML private Button applyButton;
   @FXML private Button threeDotsButton;
   @FXML private Button closeButton;
@@ -55,7 +55,6 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     addListeners();
     addTooltipToUpdateCheckBox();
     setIcon();
-    setLoadingSpinner();
     setupThemeBox();
     makeSoftwareDraggable();
     setupIconButtons();
@@ -102,6 +101,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     threeDotsButton.getStyleClass().add("icon-button");
     closeButton.getStyleClass().add("icon-button");
     closeButton.getStyleClass().add("close-button");
+    progressIndicator.getStyleClass().add("loading-spinner");
   }
 
   private void addTooltipToUpdateCheckBox() {
@@ -112,8 +112,8 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     themeBox.valueProperty().bindBidirectional(getViewModel().currentThemeProperty());
     themeBox.itemsProperty().bind(getViewModel().themesProperty());
     updateCheckBox.selectedProperty().bindBidirectional(getViewModel().updateBeforeApplyProperty());
-    loadingSpinnerImageView.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
     applyButton.disableProperty().bind(getViewModel().progressProperty().greaterThan(0));
+    progressIndicator.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
   }
 
   private void addListeners() {
@@ -128,11 +128,6 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   private void setIcon() {
     ImagePattern icon = createIcon();
     iconShape.setFill(icon);
-  }
-
-  private void setLoadingSpinner() {
-    Image loadingSpinner = createLoadingSpinner();
-    loadingSpinnerImageView.setImage(loadingSpinner);
   }
 
   private void setupThemeBox() {
@@ -151,21 +146,10 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     }
   }
 
-  private Image createLoadingSpinner() {
-    getResourceAsSaveStream(LOADING_SPINNER_PATH)
-            .ifPresent(this::setLoadingSpinnerImage);
-    return loadingSpinnerImageView.getImage();
-  }
-
   private ImagePattern createIcon() {
     getResourceAsSaveStream(ICON_PATH)
             .ifPresent(this::setIconImage);
     return (ImagePattern) iconShape.getFill();
-  }
-
-  private void setLoadingSpinnerImage(InputStream inputStream) {
-    Image loadingSpinner = new Image(inputStream);
-    loadingSpinnerImageView.setImage(loadingSpinner);
   }
 
   private void setIconImage(InputStream inputStream) {

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ProgressIndicator?>
 <VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="487.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="dev.luzifer.ui.view.views.SpicetifyView">
@@ -57,8 +58,7 @@
                 <HBox alignment="CENTER" prefHeight="47.0" prefWidth="287.0" spacing="10.0">
                     <children>
                         <ProgressBar fx:id="applyProgressBar" prefHeight="23.0" prefWidth="218.0" progress="0.0"/>
-                        <ImageView fx:id="loadingSpinnerImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
-                                   preserveRatio="true"/>
+                        <ProgressIndicator fx:id="progressIndicator" minHeight="20" minWidth="20"/>
                     </children>
                 </HBox>
                 <Button fx:id="applyButton" mnemonicParsing="false" onAction="#onApply" prefHeight="31.0"

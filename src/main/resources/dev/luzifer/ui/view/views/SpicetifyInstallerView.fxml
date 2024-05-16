@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -44,7 +45,15 @@
                         </VBox>
                     </children>
                 </VBox>
-                <ProgressBar fx:id="progressBar" prefHeight="22.0" prefWidth="570.0" progress="0.0" />
+                <HBox alignment="CENTER" prefHeight="47.0" prefWidth="287.0" spacing="10.0">
+                    <children>
+                        <ProgressBar fx:id="progressBar" prefHeight="22.0" prefWidth="570.0" progress="0.0" />
+                        <ProgressIndicator fx:id="progressIndicator" minHeight="20" minWidth="20" />
+                    </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+                </HBox>
             </children>
             <padding>
                 <Insets bottom="15.0" />

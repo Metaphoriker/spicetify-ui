@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -26,6 +27,7 @@ public class SpicetifyInstallerView extends View<SpicetifyInstallerViewModel> {
   @FXML private CheckBox marketplaceCheckBox;
   @FXML private Label notInstalledLabel;
   @FXML private ProgressBar progressBar;
+  @FXML private ProgressIndicator progressIndicator;
   @FXML private Rectangle spicetifyLogoShape;
   @FXML private VBox rootPane;
   @FXML private Button closeButton;
@@ -44,6 +46,7 @@ public class SpicetifyInstallerView extends View<SpicetifyInstallerViewModel> {
     bindProperties();
     setupHeaderText();
     setupCloseButton();
+    setupStyling();
     setLogoImage();
     setInteractiveTexts();
     makeSoftwareDraggable();
@@ -53,6 +56,7 @@ public class SpicetifyInstallerView extends View<SpicetifyInstallerViewModel> {
     marketplaceCheckBox.selectedProperty().bindBidirectional(getViewModel().marketplaceProperty());
     installButton.disableProperty().bind(getViewModel().progressProperty().greaterThan(0));
     progressBar.progressProperty().bind(getViewModel().progressProperty());
+    progressIndicator.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
   }
 
   private ImageView downTrimmedImageView(ImageView imageView) {
@@ -89,6 +93,10 @@ public class SpicetifyInstallerView extends View<SpicetifyInstallerViewModel> {
   void onClose(ActionEvent event) {
     Stage stage = (Stage) rootPane.getScene().getWindow();
     stage.close();
+  }
+
+  private void setupStyling() {
+    progressIndicator.getStyleClass().add("loading-spinner");
   }
 
   private void setLogoImage() {
