@@ -1,12 +1,14 @@
 .root {
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    -fx-base: #ff8c00; /* Dark orange */
-    -fx-background: #282828; /* Dark grey */
+    -fx-base: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-background: #282828;
+    -fx-mark-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-mark-highlight-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
 }
 
 .button {
-    -fx-background-color: #ff8c00; /* Dark orange */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
     -fx-text-fill: white;
     -fx-border-color: transparent;
     -fx-border-radius: 4;
@@ -14,106 +16,58 @@
 }
 
 .button:hover {
-    -fx-background-color: #e67300; /* Darker orange */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #c64337, #c0701f);
 }
 
 .button:pressed {
-    -fx-background-color: #cc6600; /* Even darker orange */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #9c312a, #8b4f16);
 }
 
 .icon-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #ff8c00; /* Dark orange */
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
     -fx-border-color: transparent;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
 }
 
-.icon-button:hover {
-    -fx-background-color: #e67300; /* Darker orange */
+.label, .header-text.label, .menu, .choice-box .label, .choice-box .cell, .choice-box .menu-item, .check-box {
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
 }
 
-.icon-button:pressed {
-    -fx-background-color: #cc6600; /* Even darker orange */
-}
-
-.close-button:hover {
-    -fx-background-color: #d00f0f;
-}
-
-.close-button:pressed {
-    -fx-background-color: #b00d0d;
-}
-
-.text-field {
-    -fx-background-color: #383838; /* Darker grey */
-    -fx-border-color: #ff8c00; /* Dark orange */
+.text-field, .choice-box {
+    -fx-background-color: #383838;
+    -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
     -fx-border-radius: 4;
-}
-
-.label {
-    -fx-text-fill: #ff8c00; /* Dark orange */
-}
-
-.header-text.label {
-    -fx-font-weight: bold;
-    -fx-font-size: 18px;
-    -fx-text-fill: #ff8c00; /* Dark orange */
-    -fx-padding: 10;
-}
-
-.menu-bar {
-    -fx-background-color: #282828; /* Dark grey */
-}
-
-.menu {
-    -fx-text-fill: #ff8c00; /* Dark orange */
-}
-
-.progress-bar {
-    -fx-accent: #ff8c00; /* Dark orange */
-    -fx-control-inner-background: #383838; /* Darker grey */
-    -fx-progress-color: #ff4500; /* Orange red */
-}
-
-.choice-box {
-    -fx-background-color: #383838; /* Darker grey */
-    -fx-border-color: #ff8c00; /* Dark orange */
-    -fx-border-radius: 4;
-    -fx-padding: 5;
-    -fx-text-fill: #ff8c00; /* Dark orange */
-}
-
-.choice-box .label {
-    -fx-text-fill: #ff8c00; /* Dark orange */
-}
-
-.choice-box .cell {
-    -fx-text-fill: #ff8c00; /* Dark orange */
-    -fx-background-color: #383838; /* Darker grey */
-}
-
-.choice-box .cell:hover {
-    -fx-background-color: #282828; /* Dark grey */
-}
-
-.choice-box .menu-item {
-    -fx-text-fill: #ff8c00; /* Dark orange */
-    -fx-background-color: #383838; /* Darker grey */
-}
-
-.choice-box .menu-item:hover {
-    -fx-background-color: #282828; /* Dark grey */
-}
-
-.check-box {
-    -fx-text-fill: #ff8c00; /* Dark orange */
 }
 
 .check-box .box {
-    -fx-border-color: #ff8c00; /* Dark orange */
+    -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+}
+
+.context-menu,
+.menu-up-arrow,
+.menu-down-arrow,
+.check-box > .box,
+.check-box:focused > .box {
+    -fx-background-color: #282828;
+}
+
+.choice-box > .open-button > .arrow,
+.check-box:selected > .box > .mark {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+}
+
+.choice-box .menu-item:hover {
+    -fx-background-color: rgba(232, 75, 61, 0.5);
+}
+
+.progress-bar {
+    -fx-accent: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-control-inner-background: #383838;
+    -fx-progress-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
 }
 
 .loading-spinner {
-    -fx-progress-color: #ff4500; /* Orange red */
+    -fx-progress-color: #E84B3D;
 }
