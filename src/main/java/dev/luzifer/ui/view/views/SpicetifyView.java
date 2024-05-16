@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
 
+  private static final String MINIMIZE_ICON_PATH = "/minimize.png";
   private static final String ICON_PATH = "/spicetify-logo.png";
   private static final String CLOSE_ICON_PATH = "/close.png";
   private static final String THREE_DOTS_ICON_PATH = "/three-dots.png";
@@ -34,6 +35,7 @@ public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
   @FXML private Button applyButton;
   @FXML private Button threeDotsButton;
   @FXML private Button closeButton;
+  @FXML private Button minimizeButton;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
@@ -64,15 +66,23 @@ public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
     stage.close();
   }
 
+  @FXML
+  void onMinimize(ActionEvent event) {
+    Stage stage = (Stage) minimizeButton.getScene().getWindow();
+    stage.setIconified(true);
+  }
+
   private void setupIconButtons() {
     threeDotsButton.setGraphic(downTrimmedImageView(new ImageView(new Image(THREE_DOTS_ICON_PATH))));
     closeButton.setGraphic(downTrimmedImageView(new ImageView(new Image(CLOSE_ICON_PATH))));
+    minimizeButton.setGraphic(downTrimmedImageView(new ImageView(new Image(MINIMIZE_ICON_PATH))));
     setupIconButtonsStyleClasses();
   }
 
   private void setupIconButtonsStyleClasses() {
     threeDotsButton.getStyleClass().add("icon-button");
     closeButton.getStyleClass().add("icon-button");
+    minimizeButton.getStyleClass().add("icon-button");
     closeButton.getStyleClass().add("close-button");
     progressIndicator.getStyleClass().add("loading-spinner");
   }

@@ -22,9 +22,10 @@
                                 <Button fx:id="threeDotsButton" mnemonicParsing="false" />
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                             <children>
-                                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
+                                <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#onMinimize" />
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
                             </children>
                         </HBox>
                     </children>
