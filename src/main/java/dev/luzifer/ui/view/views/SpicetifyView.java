@@ -74,13 +74,13 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     notInstalledVBox.visibleProperty().bind(getViewModel().notInstalledProperty());
     installedVBox.visibleProperty().bind(getViewModel().notInstalledProperty().not());
     marketplaceCheckBox.selectedProperty().bindBidirectional(getViewModel().marketplaceProperty());
-    loadingSpinnerImageView.visibleProperty().bind(getViewModel().progressPropertty().greaterThan(0));
-    installLoadingSpinnerImageView.visibleProperty().bind(getViewModel().progressPropertty().greaterThan(0));
+    loadingSpinnerImageView.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
+    installLoadingSpinnerImageView.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
   }
 
   private void addListeners() {
     getViewModel()
-        .progressPropertty()
+        .progressProperty()
         .addListener(
             (_, _, progress) ->
                 Platform.runLater(() -> setProgress(progress)));

@@ -84,10 +84,6 @@ public class SpicetifyViewModel implements ViewModel {
     Main.setLastTheme(currentThemeProperty.get());
   }
 
-  public String getTheme() {
-    return currentThemeProperty.get();
-  }
-
   public void resetProgress() {
     progressCount = 0;
     progressProperty.set(0);
@@ -105,7 +101,7 @@ public class SpicetifyViewModel implements ViewModel {
     return notInstalledProperty;
   }
 
-  public DoubleProperty progressPropertty() {
+  public DoubleProperty progressProperty() {
     return progressProperty;
   }
 
@@ -123,15 +119,15 @@ public class SpicetifyViewModel implements ViewModel {
 
   private void setCurrentTheme() {
     String command = SPICETIFY_THEME_COMMAND + currentThemeProperty.get();
-    commandExecutor.executeCommand(command);
+    commandExecutor.executeCommand(command, this::increaseProgress);
   }
 
   private void updateSpicetify() {
-    commandExecutor.executeCommand(SPICETIFY_UPDATE_COMMAND);
+    commandExecutor.executeCommand(SPICETIFY_UPDATE_COMMAND, this::increaseProgress);
   }
 
   private void applySpicetify() {
-    commandExecutor.executeCommand(SPICETIFY_APPLY_COMMAND);
+    commandExecutor.executeCommand(SPICETIFY_APPLY_COMMAND, this::increaseProgress);
   }
 
   public void install() {
@@ -155,7 +151,7 @@ public class SpicetifyViewModel implements ViewModel {
   }
 
   private void afterInstall() {
-    commandExecutor.executeCommand(SPICETIFY_BACKUP_APPLY_COMMAND);
+    commandExecutor.executeCommand(SPICETIFY_BACKUP_APPLY_COMMAND, this::increaseProgress);
     checkSpicetifyInstalled();
   }
 
