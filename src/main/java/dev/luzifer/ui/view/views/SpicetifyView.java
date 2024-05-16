@@ -14,9 +14,11 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -28,6 +30,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   private static final String ICON_PATH = "/icon.png";
   private static final String LOADING_SPINNER_PATH = "/loading.gif";
 
+  @FXML private StackPane rootPane;
   @FXML private Circle iconShape;
   @FXML private Circle iconShape1;
   @FXML private ChoiceBox<String> themeBox;
@@ -42,6 +45,9 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private ImageView installLoadingSpinnerImageView;
   @FXML private Button applyButton;
   @FXML private Button installButton;
+
+  private double xOffset = 0;
+  private double yOffset = 0;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
@@ -59,6 +65,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     setLoadingSpinner();
     setupThemeBox();
     setNotInstalledLabelText();
+    makeSoftwareDraggable();
   }
 
   @FXML
@@ -69,6 +76,20 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML
   void onInstall(ActionEvent event) {
     getViewModel().install();
+  }
+
+  private void makeSoftwareDraggable() {
+    rootPane.setOnMousePressed(event -> {
+      Stage stage = (Stage) rootPane.getScene().getWindow();
+      xOffset = stage.getX() - event.getScreenX();
+      yOffset = stage.getY() - event.getScreenY();
+    });
+
+    rootPane.setOnMouseDragged(event -> {
+      Stage stage = (Stage) rootPane.getScene().getWindow();
+      stage.setX(event.getScreenX() + xOffset);
+      stage.setY(event.getScreenY() + yOffset);
+    });
   }
 
   private void addTooltipToUpdateCheckBox() {
