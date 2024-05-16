@@ -1,4 +1,4 @@
-package dev.luzifer.ui.view.viewmodel;
+package dev.luzifer.ui.view.viewmodel.utils;
 
 import dev.luzifer.Main;
 

@@ -1,6 +1,7 @@
 package dev.luzifer.ui.view.viewmodel;
 
 import dev.luzifer.ui.view.ViewModel;
+import dev.luzifer.ui.view.viewmodel.utils.CommandExecutor;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
