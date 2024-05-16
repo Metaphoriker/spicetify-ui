@@ -1,7 +1,5 @@
 package dev.luzifer.ui.view.views;
 
-import dev.luzifer.Main;
-import dev.luzifer.ui.view.View;
 import dev.luzifer.ui.view.viewmodel.SpicetifyViewModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,23 +12,20 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class SpicetifyView extends View<SpicetifyViewModel> {
+public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
 
   private static final String ICON_PATH = "/spicetify-logo.png";
   private static final String CLOSE_ICON_PATH = "/close.png";
   private static final String THREE_DOTS_ICON_PATH = "/three-dots.png";
 
-  @FXML private VBox rootPane;
   @FXML private Circle iconShape;
   @FXML private ChoiceBox<String> themeBox;
   @FXML private CheckBox updateCheckBox;
@@ -40,9 +35,6 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private Button threeDotsButton;
   @FXML private Button closeButton;
 
-  private double xOffset = 0;
-  private double yOffset = 0;
-
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
   }
@@ -50,13 +42,14 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     super.initialize(url, resourceBundle);
+
     getViewModel().setupThemesFolderWatcher(_ -> Platform.runLater(() -> getViewModel().reloadThemes()));
+
     bindProperties();
     addListeners();
     addTooltipToUpdateCheckBox();
     setIcon();
     setupThemeBox();
-    makeSoftwareDraggable();
     setupIconButtons();
   }
 
@@ -71,30 +64,10 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     stage.close();
   }
 
-  private void makeSoftwareDraggable() {
-    rootPane.setOnMousePressed(event -> {
-      Stage stage = (Stage) rootPane.getScene().getWindow();
-      xOffset = stage.getX() - event.getScreenX();
-      yOffset = stage.getY() - event.getScreenY();
-    });
-
-    rootPane.setOnMouseDragged(event -> {
-      Stage stage = (Stage) rootPane.getScene().getWindow();
-      stage.setX(event.getScreenX() + xOffset);
-      stage.setY(event.getScreenY() + yOffset);
-    });
-  }
-
   private void setupIconButtons() {
     threeDotsButton.setGraphic(downTrimmedImageView(new ImageView(new Image(THREE_DOTS_ICON_PATH))));
     closeButton.setGraphic(downTrimmedImageView(new ImageView(new Image(CLOSE_ICON_PATH))));
     setupIconButtonsStyleClasses();
-  }
-
-  private ImageView downTrimmedImageView(ImageView imageView) {
-    imageView.setFitHeight(20);
-    imageView.setFitWidth(20);
-    return imageView;
   }
 
   private void setupIconButtonsStyleClasses() {
@@ -155,10 +128,5 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   private void setIconImage(InputStream inputStream) {
     Image icon = new Image(inputStream);
     iconShape.setFill(new ImagePattern(icon));
-  }
-
-  private Optional<InputStream> getResourceAsSaveStream(String path) {
-    InputStream inputStream =Main.class.getResourceAsStream(path);
-    return Optional.ofNullable(inputStream);
   }
 }
