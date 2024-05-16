@@ -47,7 +47,7 @@
                         <ImageView fx:id="loadingSpinnerImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </HBox>
-                      <Button mnemonicParsing="false" onAction="#onApply" prefHeight="31.0" prefWidth="97.0" text="Apply" />
+                      <Button fx:id="applyButton" mnemonicParsing="false" onAction="#onApply" prefHeight="31.0" prefWidth="97.0" text="Apply" />
                   </children>
                   <padding>
                       <Insets left="10.0" right="10.0" />

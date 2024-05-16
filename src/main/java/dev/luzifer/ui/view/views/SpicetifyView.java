@@ -6,6 +6,7 @@ import dev.luzifer.ui.view.viewmodel.SpicetifyViewModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -36,6 +37,8 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private Label notInstalledLabel;
   @FXML private ImageView loadingSpinnerImageView;
   @FXML private ImageView installLoadingSpinnerImageView;
+  @FXML private Button applyButton;
+  @FXML private Button installButton;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
@@ -82,6 +85,8 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     marketplaceCheckBox.selectedProperty().bindBidirectional(getViewModel().marketplaceProperty());
     loadingSpinnerImageView.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
     installLoadingSpinnerImageView.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
+    applyButton.disableProperty().bind(getViewModel().progressProperty().greaterThan(0));
+    installButton.disableProperty().bind(getViewModel().progressProperty().greaterThan(0));
   }
 
   private void addListeners() {
