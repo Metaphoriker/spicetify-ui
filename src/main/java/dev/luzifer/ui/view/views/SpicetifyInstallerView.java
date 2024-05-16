@@ -50,9 +50,12 @@ public class SpicetifyInstallerView extends DraggableView<SpicetifyInstallerView
   }
 
   private void setupCloseButton() {
-    closeButton.setGraphic(
-        downTrimmedImageView(
-            new ImageView(new Image(getClass().getResourceAsStream("/close.png")))));
+    getResourceAsSaveStream("/close.png")
+        .ifPresent(
+            inputStream ->
+                closeButton.setGraphic(
+                    downTrimmedImageView(
+                        new ImageView(new Image(inputStream, 20, 20, true, true)))));
     closeButton.getStyleClass().add("icon-button");
     closeButton.getStyleClass().add("close-button");
   }
