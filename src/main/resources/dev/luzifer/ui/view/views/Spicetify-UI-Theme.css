@@ -63,9 +63,9 @@
 }
 
 .progress-bar {
-    -fx-accent: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-accent: #E84B3D;
     -fx-control-inner-background: #383838;
-    -fx-progress-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-progress-color: #E84B3D;
 }
 
 .loading-spinner {
