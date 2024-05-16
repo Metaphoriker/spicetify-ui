@@ -10,6 +10,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class ViewController {
   }
 
   public void closeAllViews() {
-    viewMap.values().forEach(View::close);
+    new ArrayList<>(viewMap.values()).forEach(View::close);
   }
 
   private String getViewName(View<? extends ViewModel> view) {

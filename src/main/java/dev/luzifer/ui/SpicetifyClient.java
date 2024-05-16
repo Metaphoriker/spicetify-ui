@@ -7,6 +7,7 @@ import dev.luzifer.ui.view.viewmodel.SpicetifyViewModel;
 import dev.luzifer.ui.view.views.SpicetifyInstallerView;
 import dev.luzifer.ui.view.views.SpicetifyView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class SpicetifyClient extends Application {
@@ -22,8 +23,11 @@ public class SpicetifyClient extends Application {
           new SpicetifyInstallerView(
               new SpicetifyInstallerViewModel(
                   () -> {
-                    viewController.closeAllViews();
-                    viewController.showView(spicetifyView);
+                    Platform.runLater(
+                        () -> {
+                          viewController.closeAllViews();
+                          viewController.showView(spicetifyView);
+                        });
                   })));
   }
 }
