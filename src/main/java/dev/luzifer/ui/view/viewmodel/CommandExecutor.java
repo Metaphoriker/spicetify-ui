@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 public class CommandExecutor {
 
-  private static final Executor EXECUTOR = Executors.newWorkStealingPool();
+  private static final Executor EXECUTOR = Executors.newSingleThreadExecutor();
 
   public void executeCommand(String command) {
     executeCommand(command, () -> {});
