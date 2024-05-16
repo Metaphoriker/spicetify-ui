@@ -18,12 +18,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import java.io.InputStream;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SpicetifyView extends View<SpicetifyViewModel> {
 
   private static final String ICON_PATH = "/icon.png";
+  private static final String LOADING_SPINNER_PATH = "/loading.gif";
 
   @FXML private Circle iconShape;
   @FXML private Circle iconShape1;
@@ -138,10 +141,30 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   }
 
   private Image createLoadingSpinner() {
-    return new Image(Main.class.getResourceAsStream("/loading.gif"));
+    getResourceAsSaveStream(LOADING_SPINNER_PATH)
+            .ifPresent(this::setLoadingSpinnerImage);
+    return loadingSpinnerImageView.getImage();
   }
 
   private ImagePattern createIcon() {
-    return new ImagePattern(new Image(Main.class.getResourceAsStream(ICON_PATH)));
+    getResourceAsSaveStream(ICON_PATH)
+            .ifPresent(this::setIconImage);
+    return (ImagePattern) iconShape.getFill();
+  }
+
+  private void setLoadingSpinnerImage(InputStream inputStream) {
+    Image loadingSpinner = new Image(inputStream);
+    loadingSpinnerImageView.setImage(loadingSpinner);
+    installLoadingSpinnerImageView.setImage(loadingSpinner);
+  }
+
+  private void setIconImage(InputStream inputStream) {
+    Image icon = new Image(inputStream);
+    iconShape.setFill(new ImagePattern(icon));iconShape1.setFill(new ImagePattern(icon));
+  }
+
+  private Optional<InputStream> getResourceAsSaveStream(String path) {
+    InputStream inputStream =Main.class.getResourceAsStream(path);
+    return Optional.ofNullable(inputStream);
   }
 }
