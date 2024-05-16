@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -55,6 +56,7 @@ public class ViewController {
           viewMap.remove(title);
         });
     view.setResizable(false);
+    view.initStyle(StageStyle.UNDECORATED);
     view.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
     view.show();
   }
