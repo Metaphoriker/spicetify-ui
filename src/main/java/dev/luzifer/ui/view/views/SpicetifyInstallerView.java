@@ -92,7 +92,7 @@ public class SpicetifyInstallerView extends View<SpicetifyInstallerViewModel> {
   }
 
   private void setLogoImage() {
-    getResourceAsSaveStream("/spicetify-logo.png")
+    getResourceAsSaveStream("/spicetify-banner.png")
         .ifPresent(
             inputStream -> {
               Image image = new Image(inputStream);

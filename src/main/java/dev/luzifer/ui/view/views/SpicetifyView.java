@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class SpicetifyView extends View<SpicetifyViewModel> {
 
-  private static final String ICON_PATH = "/icon.png";
+  private static final String ICON_PATH = "/spicetify-logo.png";
   private static final String LOADING_SPINNER_PATH = "/loading.gif";
   private static final String CLOSE_ICON_PATH = "/close.png";
   private static final String THREE_DOTS_ICON_PATH = "/three-dots.png";
