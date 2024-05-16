@@ -10,6 +10,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -47,6 +48,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     getViewModel().setupFileWatcher(_ -> Platform.runLater(() -> getViewModel().reloadThemes()));
     bindProperties();
     addListeners();
+    addTooltipToUpdateCheckBox();
     setIcon();
     setLoadingSpinner();
     setupThemeBox();
@@ -61,6 +63,10 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML
   void onInstall(ActionEvent event) {
     getViewModel().install();
+  }
+
+  private void addTooltipToUpdateCheckBox() {
+    updateCheckBox.setTooltip(new Tooltip("Update Spicetify before applying the theme (Recommended)")); // TODO: later from messages.properties
   }
 
   private void setNotInstalledLabelText() {
