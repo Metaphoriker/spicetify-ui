@@ -90,7 +90,7 @@ public class SpicetifyViewModel implements ViewModel {
   }
 
   public void checkSpicetifyInstalled() {
-    notInstalledProperty.set(Main.isSpicetifyInstalled());
+    notInstalledProperty.set(!Main.isSpicetifyInstalled());
   }
 
   public BooleanProperty updateBeforeApplyProperty() {
