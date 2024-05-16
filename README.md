@@ -1,17 +1,7 @@
 # Spicetify Theme Switcher
 
 This software requires **Java 22** or higher.
+A little software to either install Spicetify and or change the theme of your Spotify by using Spicetify easier.
 
-## Features
-
-- **Theme Switching**: Easily switch your Spicetify themes directly from the software.
-- **Automatic Updates**: The software ensures that your Spicetify is always up to date.
-- **Spicetify Installation**: If Spicetify is not installed on your system, the software provides an option to install it.
-
-## Installation
-
-1. Ensure you have Java 22 or higher installed on your system.
-2. Download the latest release of the software.
-3. Run the software and follow the on-screen instructions.
-
-Enjoy your personalized Spotify experience with Spicetify Theme Switcher!
+# Screenshots
+![image](https://github.com/GodCipher/spicetify-themes-ui/assets/50031457/60d31f41-9675-4456-a169-7511cc82f481) ![image1](https://github.com/GodCipher/spicetify-themes-ui/assets/50031457/ff47b12a-16e5-4b77-b37b-2d19f29a1323)
