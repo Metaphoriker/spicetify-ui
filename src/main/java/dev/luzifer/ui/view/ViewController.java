@@ -16,6 +16,9 @@ import java.util.Optional;
 
 public class ViewController {
 
+  public static final String CSS_CLASS_PATH = "/dev/luzifer/ui/view/views/SpicetifyView.css";
+  public static final String ICON_PATH = "/icon.png";
+
   private final Map<String, View<? extends ViewModel>> viewMap = new HashMap<>();
 
   public void showView(View<? extends ViewModel> view) {
@@ -39,7 +42,7 @@ public class ViewController {
 
   private Scene createScene(Parent root) {
     Scene scene = new Scene(root);
-    URL cssUrl = getClass().getResource("/dev/luzifer/ui/view/views/SpicetifyView.css");
+    URL cssUrl = getClass().getResource(CSS_CLASS_PATH);
     if (cssUrl != null) {
       String css = cssUrl.toExternalForm();
       scene.getStylesheets().add(css);
@@ -57,7 +60,7 @@ public class ViewController {
         });
     view.setResizable(false);
     view.initStyle(StageStyle.UNDECORATED);
-    view.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
+    view.getIcons().add(new Image(getClass().getResourceAsStream(ICON_PATH)));
     view.show();
   }
 
