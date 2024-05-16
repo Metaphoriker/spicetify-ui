@@ -27,6 +27,10 @@ public class ViewController {
         .ifPresentOrElse(View::requestFocus, () -> createAndShowView(view, viewName));
   }
 
+  public void closeAllViews() {
+    viewMap.values().forEach(View::close);
+  }
+
   private String getViewName(View<? extends ViewModel> view) {
     return view.getClass()
         .getSimpleName()

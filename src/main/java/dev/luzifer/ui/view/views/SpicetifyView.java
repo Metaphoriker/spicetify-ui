@@ -28,7 +28,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   private static final String ICON_PATH = "/icon.png";
   private static final String LOADING_SPINNER_PATH = "/loading.gif";
   private static final String CLOSE_ICON_PATH = "/close.png";
-  private static final String THREE_DOTS_ICON_PATH = "/threeDots.png";
+  private static final String THREE_DOTS_ICON_PATH = "/three-dots.png";
 
   @FXML private VBox rootPane;
   @FXML private Circle iconShape;
@@ -68,8 +68,6 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
 
   @FXML
   void onClose(ActionEvent event) {
-    super.onClose();
-
     Stage stage = (Stage) closeButton.getScene().getWindow();
     stage.close();
   }
