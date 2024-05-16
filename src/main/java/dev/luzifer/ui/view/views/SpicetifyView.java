@@ -29,6 +29,8 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
 
   private static final String ICON_PATH = "/icon.png";
   private static final String LOADING_SPINNER_PATH = "/loading.gif";
+  private static final String CLOSE_ICON_PATH = "/close.png";
+  private static final String THREE_DOTS_ICON_PATH = "/threeDots.png";
 
   @FXML private StackPane rootPane;
   @FXML private Circle iconShape;
@@ -45,6 +47,8 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML private ImageView installLoadingSpinnerImageView;
   @FXML private Button applyButton;
   @FXML private Button installButton;
+  @FXML private Button threeDotsButton;
+  @FXML private Button closeButton;
 
   private double xOffset = 0;
   private double yOffset = 0;
@@ -66,6 +70,7 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
     setupThemeBox();
     setNotInstalledLabelText();
     makeSoftwareDraggable();
+    setupIconButtons();
   }
 
   @FXML
@@ -76,6 +81,14 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   @FXML
   void onInstall(ActionEvent event) {
     getViewModel().install();
+  }
+
+  @FXML
+  void onClose(ActionEvent event) {
+    super.onClose();
+
+    Stage stage = (Stage) closeButton.getScene().getWindow();
+    stage.close();
   }
 
   private void makeSoftwareDraggable() {
@@ -90,6 +103,24 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
       stage.setX(event.getScreenX() + xOffset);
       stage.setY(event.getScreenY() + yOffset);
     });
+  }
+
+  private void setupIconButtons() {
+    threeDotsButton.setGraphic(downTrimmedImageView(new ImageView(new Image(THREE_DOTS_ICON_PATH))));
+    closeButton.setGraphic(downTrimmedImageView(new ImageView(new Image(CLOSE_ICON_PATH))));
+    setupIconButtonsStyleClasses();
+  }
+
+  private ImageView downTrimmedImageView(ImageView imageView) {
+    imageView.setFitHeight(20);
+    imageView.setFitWidth(20);
+    return imageView;
+  }
+
+  private void setupIconButtonsStyleClasses() {
+    threeDotsButton.getStyleClass().add("icon-button");
+    closeButton.getStyleClass().add("icon-button");
+    closeButton.getStyleClass().add("close-button");
   }
 
   private void addTooltipToUpdateCheckBox() {

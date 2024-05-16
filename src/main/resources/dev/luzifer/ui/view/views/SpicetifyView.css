@@ -13,6 +13,30 @@
     -fx-background-radius: 4;
 }
 
+.button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #007aff;
+    -fx-border-color: transparent;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.icon-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.icon-button:pressed {
+    -fx-background-color: #d5d5d5;
+}
+
+.close-button:hover {
+    -fx-background-color: #d00f0f;
+}
+
 .text-field {
     -fx-background-color: white;
     -fx-border-color: #c7c7cc;

@@ -16,8 +16,8 @@ import java.util.Optional;
 
 public class ViewController {
 
-  public static final String CSS_CLASS_PATH = "/dev/luzifer/ui/view/views/SpicetifyView.css";
-  public static final String ICON_PATH = "/icon.png";
+  private static final String CSS_CLASS_PATH = "/dev/luzifer/ui/view/views/SpicetifyView.css";
+  private static final String ICON_PATH = "/icon.png";
 
   private final Map<String, View<? extends ViewModel>> viewMap = new HashMap<>();
 
