@@ -67,6 +67,10 @@ public class SpicetifyViewModel implements ViewModel {
     CompletableFuture.runAsync(fileSystemWatcher, Executors.newSingleThreadExecutor());
   }
 
+  public String getLastTheme() {
+    return Main.getLastTheme();
+  }
+
   public void applyTheme() {
     determineMaxProgress();
     if (updateBeforeApplyProperty.get()) {

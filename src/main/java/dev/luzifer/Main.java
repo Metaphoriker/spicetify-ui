@@ -39,4 +39,8 @@ public class Main {
   public static void setLastTheme(String theme) {
     SPICETIFY_SERVICE.setLastTheme(theme);
   }
+
+  public static String getLastTheme() {
+    return SPICETIFY_SERVICE.getLastTheme();
+  }
 }

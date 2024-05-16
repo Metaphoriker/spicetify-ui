@@ -111,11 +111,19 @@ public class SpicetifyView extends View<SpicetifyViewModel> {
   }
 
   private void setupThemeBox() {
-    String theme = getViewModel().getTheme();
-    if (theme == null && !themeBox.getItems().isEmpty()) {
-      theme = themeBox.getItems().get(0);
+    String lastTheme = getViewModel().getLastTheme();
+    if (lastTheme != null) {
+      themeBox.setValue(lastTheme);
+      return;
     }
-    themeBox.setValue(theme);
+
+    setThemeToFirst();
+  }
+
+  private void setThemeToFirst() {
+    if (!themeBox.getItems().isEmpty()) {
+      themeBox.setValue(themeBox.getItems().getFirst());
+    }
   }
 
   private Image createLoadingSpinner() {
