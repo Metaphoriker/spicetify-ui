@@ -37,6 +37,10 @@
     -fx-background-color: #d00f0f;
 }
 
+.close-button:pressed {
+    -fx-background-color: #b00d0d;
+}
+
 .text-field {
     -fx-background-color: white;
     -fx-border-color: #c7c7cc;
