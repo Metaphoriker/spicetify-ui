@@ -12,7 +12,13 @@ import java.util.concurrent.Executors;
 
 public class CommandExecutor {
 
-  private static final Executor EXECUTOR = Executors.newSingleThreadExecutor();
+  private static final Executor EXECUTOR =
+      Executors.newSingleThreadExecutor(
+          runnable -> {
+            Thread thread = new Thread(runnable);
+            thread.setDaemon(true);
+            return thread;
+          });
 
   public void executeCommand(String command) {
     executeCommand(command, () -> {});

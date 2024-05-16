@@ -19,8 +19,6 @@ import lombok.extern.java.Log;
 
 import java.nio.file.Path;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 @Log
@@ -64,7 +62,9 @@ public class SpicetifyViewModel implements ViewModel {
 
   public void setupFileWatcher(Consumer<String> callback) {
     FileSystemWatcher fileSystemWatcher = new FileSystemWatcher(callback);
-    CompletableFuture.runAsync(fileSystemWatcher, Executors.newSingleThreadExecutor());
+    Thread thread = new Thread(fileSystemWatcher);
+    thread.setDaemon(true);
+    thread.start();
   }
 
   public String getLastTheme() {
@@ -90,7 +90,7 @@ public class SpicetifyViewModel implements ViewModel {
   }
 
   public void checkSpicetifyInstalled() {
-    notInstalledProperty.set(!Main.isSpicetifyInstalled());
+    notInstalledProperty.set(Main.isSpicetifyInstalled());
   }
 
   public BooleanProperty updateBeforeApplyProperty() {
