@@ -9,10 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 public class SpicetifyInstallerView extends BaseSpicetifyView<SpicetifyInstallerViewModel> {
 
@@ -20,7 +18,6 @@ public class SpicetifyInstallerView extends BaseSpicetifyView<SpicetifyInstaller
   @FXML private CheckBox marketplaceCheckBox;
   @FXML private Label notInstalledLabel;
   @FXML private Rectangle spicetifyLogoShape;
-  @FXML private Button closeButton;
 
   public SpicetifyInstallerView(SpicetifyInstallerViewModel viewModel) {
     super(viewModel);
@@ -32,7 +29,6 @@ public class SpicetifyInstallerView extends BaseSpicetifyView<SpicetifyInstaller
 
     bindProperties();
     setupHeaderText();
-    setupCloseButton();
     setLogoImage();
     setInteractiveTexts();
   }
@@ -40,17 +36,6 @@ public class SpicetifyInstallerView extends BaseSpicetifyView<SpicetifyInstaller
   private void bindProperties() {
     marketplaceCheckBox.selectedProperty().bindBidirectional(getViewModel().marketplaceProperty());
     installButton.disableProperty().bind(getViewModel().progressProperty().greaterThan(0));
-  }
-
-  private void setupCloseButton() {
-    getResourceAsSaveStream("/close.png")
-        .ifPresent(
-            inputStream ->
-                closeButton.setGraphic(
-                    downTrimmedImageView(
-                        new ImageView(new Image(inputStream, 20, 20, true, true)))));
-    closeButton.getStyleClass().add("icon-button");
-    closeButton.getStyleClass().add("close-button");
   }
 
   private void setupHeaderText() {
@@ -67,12 +52,6 @@ public class SpicetifyInstallerView extends BaseSpicetifyView<SpicetifyInstaller
   @FXML
   void onInstall(ActionEvent event) {
     getViewModel().install();
-  }
-
-  @FXML
-  void onClose(ActionEvent event) {
-    Stage stage = (Stage) closeButton.getScene().getWindow();
-    stage.close();
   }
 
   private void setLogoImage() {

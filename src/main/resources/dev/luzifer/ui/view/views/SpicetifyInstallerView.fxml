@@ -9,24 +9,28 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
-
-<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.luzifer.ui.view.views.SpicetifyInstallerView">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="427.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="dev.luzifer.ui.view.views.SpicetifyInstallerView">
     <children>
-      <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="580.0">
-         <children>
-            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
-         </children>
-         <VBox.margin>
-            <Insets left="10.0" right="10.0" top="10.0" />
-         </VBox.margin>
-      </HBox>
+        <HBox fx:id="controlBar" alignment="CENTER" prefHeight="36.0" prefWidth="350.0">
+            <children>
+                <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="376.0">
+                    <children>
+                        <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#onMinimize"/>
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose"/>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
-                <Rectangle fx:id="spicetifyLogoShape" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="158.0" stroke="TRANSPARENT" strokeType="INSIDE" width="461.0" />
+                <Rectangle fx:id="spicetifyLogoShape" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="158.0"
+                           stroke="TRANSPARENT" strokeType="INSIDE" width="461.0"/>
             </children>
-         <padding>
-            <Insets top="10.0" />
-         </padding>
+            <padding>
+                <Insets top="10.0"/>
+            </padding>
         </HBox>
         <VBox alignment="CENTER" prefHeight="228.0" prefWidth="600.0">
             <children>
@@ -34,29 +38,30 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="73.0" prefWidth="600.0">
                             <children>
-                                <Label fx:id="notInstalledLabel" />
+                                <Label fx:id="notInstalledLabel"/>
                             </children>
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="121.0" prefWidth="600.0" spacing="10.0">
                             <children>
-                                <Button fx:id="installButton" mnemonicParsing="false" onAction="#onInstall" prefHeight="46.0" prefWidth="86.0" />
-                                <CheckBox fx:id="marketplaceCheckBox" mnemonicParsing="false" />
+                                <Button fx:id="installButton" mnemonicParsing="false" onAction="#onInstall"
+                                        prefHeight="46.0" prefWidth="86.0"/>
+                                <CheckBox fx:id="marketplaceCheckBox" mnemonicParsing="false"/>
                             </children>
                         </VBox>
                     </children>
                 </VBox>
                 <HBox alignment="CENTER" prefHeight="47.0" prefWidth="287.0" spacing="10.0">
                     <children>
-                        <ProgressBar fx:id="progressBar" prefHeight="22.0" prefWidth="570.0" progress="0.0" />
-                        <ProgressIndicator fx:id="progressIndicator" minHeight="20" minWidth="20" />
+                        <ProgressBar fx:id="progressBar" prefHeight="22.0" prefWidth="570.0" progress="0.0"/>
+                        <ProgressIndicator fx:id="progressIndicator" minHeight="20" minWidth="20"/>
                     </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
+                    <padding>
+                        <Insets left="10.0" right="10.0"/>
+                    </padding>
                 </HBox>
             </children>
             <padding>
-                <Insets bottom="15.0" />
+                <Insets bottom="15.0"/>
             </padding>
         </VBox>
     </children>

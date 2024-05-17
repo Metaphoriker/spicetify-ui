@@ -35,6 +35,16 @@
     -fx-background-color: #d00f0f;
 }
 
+.control-bar {
+    -fx-background-color: #222020;
+    -fx-border-color: #383838;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
 .close-button:pressed {
     -fx-background-color: #b00d0d;
 }

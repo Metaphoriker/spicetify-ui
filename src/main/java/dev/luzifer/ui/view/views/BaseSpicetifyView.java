@@ -7,10 +7,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -20,9 +24,15 @@ import javafx.stage.Stage;
  */
 public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T> {
 
+  private static final String MINIMIZE_ICON_PATH = "/minimize.png";
+  private static final String CLOSE_ICON_PATH = "/close.png";
+
   @FXML private VBox rootPane;
   @FXML private ProgressBar progressBar;
   @FXML private ProgressIndicator progressIndicator;
+  @FXML private Button closeButton;
+  @FXML private Button minimizeButton;
+  @FXML private HBox controlBar;
 
   private double xOffset = 0;
   private double yOffset = 0;
@@ -35,7 +45,25 @@ public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T>
   public void initialize(URL url, ResourceBundle resourceBundle) {
     makeSoftwareDraggable();
     setupStyling();
+    setButtonsGraphics();
     bindProperties();
+  }
+
+  @FXML
+  void onClose(ActionEvent event) {
+    Stage stage = (Stage) closeButton.getScene().getWindow();
+    stage.close();
+  }
+
+  @FXML
+  void onMinimize(ActionEvent event) {
+    Stage stage = (Stage) minimizeButton.getScene().getWindow();
+    stage.setIconified(true);
+  }
+
+  private void setButtonsGraphics() {
+    closeButton.setGraphic(downTrimmedImageView(new ImageView(new Image(CLOSE_ICON_PATH))));
+    minimizeButton.setGraphic(downTrimmedImageView(new ImageView(new Image(MINIMIZE_ICON_PATH))));
   }
 
   protected ImageView downTrimmedImageView(ImageView imageView) {
@@ -46,6 +74,10 @@ public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T>
 
   private void setupStyling() {
     progressIndicator.getStyleClass().add("loading-spinner");
+    closeButton.getStyleClass().add("icon-button");
+    minimizeButton.getStyleClass().add("icon-button");
+    closeButton.getStyleClass().add("close-button");
+    controlBar.getStyleClass().add("control-bar");
   }
 
   private void bindProperties() {
@@ -54,14 +86,14 @@ public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T>
   }
 
   private void makeSoftwareDraggable() {
-    rootPane.setOnMousePressed(
+    controlBar.setOnMousePressed(
         event -> {
           Stage stage = (Stage) rootPane.getScene().getWindow();
           xOffset = stage.getX() - event.getScreenX();
           yOffset = stage.getY() - event.getScreenY();
         });
 
-    rootPane.setOnMouseDragged(
+    controlBar.setOnMouseDragged(
         event -> {
           Stage stage = (Stage) rootPane.getScene().getWindow();
           stage.setX(event.getScreenX() + xOffset);

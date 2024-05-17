@@ -15,23 +15,15 @@
     <children>
         <VBox>
             <children>
-                <HBox alignment="CENTER" prefHeight="36.0" prefWidth="350.0">
+                <HBox fx:id="controlBar" alignment="CENTER" prefHeight="36.0" prefWidth="350.0">
                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                            <children>
-                                <Button fx:id="threeDotsButton" mnemonicParsing="false" />
-                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="376.0">
                             <children>
                                 <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#onMinimize" />
-                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
+                                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
                             </children>
                         </HBox>
                     </children>
-                    <padding>
-                        <Insets left="10.0" right="10.0" top="10.0" />
-                    </padding>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="249.0" prefWidth="350.0">
                     <children>
@@ -56,14 +48,15 @@
             <children>
                 <HBox alignment="CENTER" prefHeight="47.0" prefWidth="287.0" spacing="10.0">
                     <children>
-                        <ProgressBar fx:id="applyProgressBar" prefHeight="23.0" prefWidth="218.0" progress="0.0" />
+                        <ProgressBar fx:id="progressBar" prefHeight="23.0" prefWidth="218.0" progress="0.0" />
                         <ProgressIndicator fx:id="progressIndicator" minHeight="20" minWidth="20" />
                     </children>
                 </HBox>
                 <Button fx:id="applyButton" mnemonicParsing="false" onAction="#onApply" prefHeight="31.0" prefWidth="124.0" text="Apply">
-               <HBox.margin>
-                  <Insets bottom="10.0" right="5.0" top="5.0" />
-               </HBox.margin></Button>
+                    <HBox.margin>
+                        <Insets bottom="10.0" right="5.0" top="5.0" />
+                    </HBox.margin>
+                </Button>
             </children>
             <padding>
                 <Insets left="10.0" right="10.0" />
