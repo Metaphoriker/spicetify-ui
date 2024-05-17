@@ -1,14 +1,14 @@
 .root {
     -fx-font-size: 16px;
     -fx-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    -fx-base: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-base: linear-gradient(to top, #E84B3D, #F68F27);
     -fx-background: #282828;
-    -fx-mark-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
-    -fx-mark-highlight-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-mark-color: linear-gradient(to top, #E84B3D, #F68F27);
+    -fx-mark-highlight-color: linear-gradient(to top, #E84B3D, #F68F27);
 }
 
 .button {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-background-color: linear-gradient(to top, #E84B3D, #F68F27);
     -fx-text-fill: white;
     -fx-border-color: transparent;
     -fx-border-radius: 4;
@@ -16,16 +16,16 @@
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #c64337, #c0701f);
+    -fx-background-color: linear-gradient(to top, #c64337, #c0701f);
 }
 
 .button:pressed {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #9c312a, #8b4f16);
+    -fx-background-color: linear-gradient(to top, #9c312a, #8b4f16);
 }
 
 .icon-button {
     -fx-background-color: transparent;
-    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-text-fill: linear-gradient(to top, #E84B3D, #F68F27);
     -fx-border-color: transparent;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
@@ -50,11 +50,11 @@
 }
 
 .label, .header-text.label, .menu, .choice-box .label, .choice-box .cell, .choice-box .menu-item, .check-box {
-    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-text-fill: linear-gradient(to top, #E84B3D, #F68F27);
 }
 
 .info-label {
-    -fx-text-fill: #3c3c3c;
+    -fx-text-fill: #282828;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 0, 0, 0, 1);
 }
 
@@ -65,12 +65,12 @@
 
 .text-field, .choice-box {
     -fx-background-color: #383838;
-    -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-border-color: linear-gradient(to top, #E84B3D, #F68F27);
     -fx-border-radius: 4;
 }
 
 .check-box .box {
-    -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-border-color: linear-gradient(to top, #E84B3D, #F68F27);
 }
 
 .context-menu,
@@ -83,7 +83,7 @@
 
 .choice-box > .open-button > .arrow,
 .check-box:selected > .box > .mark {
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);
+    -fx-background-color: linear-gradient(to top, #E84B3D, #F68F27);
 }
 
 .choice-box .menu-item:hover {
