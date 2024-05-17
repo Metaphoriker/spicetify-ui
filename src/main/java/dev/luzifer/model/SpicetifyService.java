@@ -1,11 +1,13 @@
 package dev.luzifer.model;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.extern.java.Log;
 
 @Log
@@ -24,23 +26,18 @@ public class SpicetifyService {
   public Path getThemeFolder() {
     return SPICETIFY_THEMES_FOLDER;
   }
-
   public Path getFirstFoundImageFile(String theme) {
-    File[] files = SPICETIFY_THEMES_FOLDER.resolve(theme).toFile().listFiles();
-    if (files == null) {
+    Path themePath = SPICETIFY_THEMES_FOLDER.resolve(theme);
+    try (Stream<Path> paths = Files.walk(themePath)) {
+      return paths
+              .filter(Files::isRegularFile)
+              .filter(path -> path.toString().endsWith(".png") || path.toString().endsWith(".jpg"))
+              .findFirst()
+              .orElse(null);
+    } catch (IOException e) {
       log.warning("Could not find any images in the theme folder of " + theme + " theme");
       return null;
     }
-
-    return Arrays.stream(files)
-        .filter(file -> file.getName().endsWith(".png") || file.getName().endsWith(".jpg"))
-        .findFirst()
-        .map(File::toPath)
-        .orElse(null);
-  }
-
-  public boolean isSpicetifyInstalled() {
-    return SPICETIFY_PATH.toFile().exists();
   }
 
   public List<Path> getThemes() {
