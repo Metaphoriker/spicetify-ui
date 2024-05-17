@@ -7,8 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,7 +18,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
+public class SpicetifyView extends BaseSpicetifyView<SpicetifyViewModel> {
 
   private static final String MINIMIZE_ICON_PATH = "/minimize.png";
   private static final String ICON_PATH = "/spicetify-logo.png";
@@ -30,8 +28,6 @@ public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
   @FXML private Circle iconShape;
   @FXML private ChoiceBox<String> themeBox;
   @FXML private CheckBox updateCheckBox;
-  @FXML private ProgressBar applyProgressBar;
-  @FXML private ProgressIndicator progressIndicator;
   @FXML private Button applyButton;
   @FXML private Button threeDotsButton;
   @FXML private Button closeButton;
@@ -84,7 +80,6 @@ public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
     closeButton.getStyleClass().add("icon-button");
     minimizeButton.getStyleClass().add("icon-button");
     closeButton.getStyleClass().add("close-button");
-    progressIndicator.getStyleClass().add("loading-spinner");
   }
 
   private void addTooltipToUpdateCheckBox() {
@@ -96,16 +91,10 @@ public class SpicetifyView extends DraggableView<SpicetifyViewModel> {
     themeBox.itemsProperty().bind(getViewModel().themesProperty());
     updateCheckBox.selectedProperty().bindBidirectional(getViewModel().updateBeforeApplyProperty());
     applyButton.disableProperty().bind(getViewModel().progressProperty().greaterThan(0));
-    progressIndicator.visibleProperty().bind(getViewModel().progressProperty().greaterThan(0));
   }
 
   private void addListeners() {
-    getViewModel().progressProperty().addListener((_, _, progress) -> Platform.runLater(() -> setProgress(progress)));
     themeBox.valueProperty().addListener((_, _, _) -> getViewModel().saveTheme());
-  }
-
-  private void setProgress(Number progress) {
-    applyProgressBar.setProgress(progress.doubleValue());
   }
 
   private void setIcon() {
