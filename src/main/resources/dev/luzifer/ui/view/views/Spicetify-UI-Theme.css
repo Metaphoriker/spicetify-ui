@@ -54,7 +54,7 @@
 }
 
 .info-label {
-    -fx-text-fill: #B3B3B3;
+    -fx-text-fill: #3c3c3c;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 0, 0, 0, 1);
 }
 
