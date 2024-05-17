@@ -1,4 +1,4 @@
-package dev.luzifer;
+package dev.luzifer.model;
 
 import lombok.extern.java.Log;
 

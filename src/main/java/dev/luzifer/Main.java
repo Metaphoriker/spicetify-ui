@@ -1,5 +1,6 @@
 package dev.luzifer;
 
+import dev.luzifer.model.SpicetifyService;
 import dev.luzifer.ui.SpicetifyClient;
 import javafx.application.Application;
 import lombok.extern.java.Log;
