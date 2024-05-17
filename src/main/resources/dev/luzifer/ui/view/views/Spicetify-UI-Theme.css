@@ -58,6 +58,11 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 0, 0, 0, 1);
 }
 
+.spicetify-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #403c3c;
+}
+
 .text-field, .choice-box {
     -fx-background-color: #383838;
     -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #E84B3D, #F68F27);

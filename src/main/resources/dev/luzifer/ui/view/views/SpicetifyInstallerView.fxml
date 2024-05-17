@@ -15,6 +15,14 @@
     <children>
         <HBox fx:id="controlBar" alignment="CENTER" prefHeight="36.0" prefWidth="350.0">
             <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="360.0">
+                    <padding>
+                        <Insets right="5.0"/>
+                    </padding>
+                    <children>
+                        <Label fx:id="spicetifyUiLabel"/>
+                    </children>
+                </HBox>
                 <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="376.0">
                     <children>
                         <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#onMinimize"/>

@@ -10,12 +10,18 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -33,6 +39,7 @@ public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T>
   @FXML private Button closeButton;
   @FXML private Button minimizeButton;
   @FXML private HBox controlBar;
+  @FXML private Label spicetifyUiLabel;
 
   private double xOffset = 0;
   private double yOffset = 0;
@@ -45,6 +52,7 @@ public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T>
   public void initialize(URL url, ResourceBundle resourceBundle) {
     makeSoftwareDraggable();
     setupStyling();
+    setupSpicetifyLabel();
     setButtonsGraphics();
     bindProperties();
   }
@@ -78,6 +86,19 @@ public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T>
     minimizeButton.getStyleClass().add("icon-button");
     closeButton.getStyleClass().add("close-button");
     controlBar.getStyleClass().add("control-bar");
+    spicetifyUiLabel.getStyleClass().add("spicetify-label");
+  }
+
+  private void setupSpicetifyLabel() {
+    spicetifyUiLabel.setText("Spicetify-UI");
+    applyGlowEffectToSpicetifyLabel();
+  }
+
+  private void applyGlowEffectToSpicetifyLabel() {
+    DropShadow dropShadow = new DropShadow();
+    dropShadow.setRadius(10.0);
+    dropShadow.setColor(Color.web("#1c1b1b"));
+    spicetifyUiLabel.setEffect(dropShadow);
   }
 
   private void bindProperties() {
