@@ -13,10 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -91,7 +88,17 @@ public abstract class BaseSpicetifyView<T extends BaseViewModel> extends View<T>
 
   private void setupSpicetifyLabel() {
     spicetifyUiLabel.setText("Spicetify-UI");
+    setSpicetifyLogoForLabel();
     applyGlowEffectToSpicetifyLabel();
+  }
+
+  private void setSpicetifyLogoForLabel() {
+    getResourceAsSaveStream("/spicetify-logo.png")
+        .ifPresent(
+            inputStream -> {
+              Image image = new Image(inputStream, 32, 32, true, true);
+              spicetifyUiLabel.setGraphic(new ImageView(image));
+            });
   }
 
   private void applyGlowEffectToSpicetifyLabel() {
