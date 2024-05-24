@@ -49,13 +49,14 @@ public class SpicetifyViewModel extends BaseViewModel {
   }
 
   private int calculateTotalSteps() {
-    int totalSteps = 2;
+    int totalSteps = 3;
     return updateBeforeApplyProperty.get() ? ++totalSteps : totalSteps;
   }
 
   private void updateSpicetifyIfNecessary() {
     if (updateBeforeApplyProperty.get()) {
       executeCommandAndUpdateProgress(SpicetifyCommands.UPDATE);
+      executeCommandAndUpdateProgress(SpicetifyCommands.BACKUP_APPLY);
     }
   }
 

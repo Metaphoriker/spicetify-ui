@@ -6,7 +6,7 @@
 
     <groupId>dev.luzifer</groupId>
     <artifactId>spicetify-ui</artifactId>
-    <version>ALPHA-1.4.1</version>
+    <version>ALPHA-1.5</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>

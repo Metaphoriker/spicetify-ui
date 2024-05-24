@@ -26,18 +26,23 @@ public class SpicetifyService {
   public Path getThemeFolder() {
     return SPICETIFY_THEMES_FOLDER;
   }
+
   public Path getFirstFoundImageFile(String theme) {
     Path themePath = SPICETIFY_THEMES_FOLDER.resolve(theme);
     try (Stream<Path> paths = Files.walk(themePath)) {
       return paths
-              .filter(Files::isRegularFile)
-              .filter(path -> path.toString().endsWith(".png") || path.toString().endsWith(".jpg"))
-              .findFirst()
-              .orElse(null);
+          .filter(Files::isRegularFile)
+          .filter(path -> path.toString().endsWith(".png") || path.toString().endsWith(".jpg"))
+          .findFirst()
+          .orElse(null);
     } catch (IOException e) {
       log.warning("Could not find any images in the theme folder of " + theme + " theme");
       return null;
     }
+  }
+
+  public boolean isSpicetifyInstalled() {
+    return SPICETIFY_PATH.toFile().exists();
   }
 
   public List<Path> getThemes() {
