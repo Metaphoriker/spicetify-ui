@@ -17,7 +17,7 @@ public class SpicetifyClient extends Application {
     ViewController viewController = new ViewController();
     SpicetifyView spicetifyView = new SpicetifyView(new SpicetifyViewModel());
 
-    if (!Main.isSpicetifyInstalled()) viewController.showView(spicetifyView);
+    if (Main.isSpicetifyInstalled()) viewController.showView(spicetifyView);
     else
       viewController.showView(
           new SpicetifyInstallerView(
