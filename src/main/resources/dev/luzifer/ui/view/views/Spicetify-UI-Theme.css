@@ -38,7 +38,7 @@
 .control-bar {
     -fx-background-color: #222020;
     -fx-border-color: #383838;
-    -fx-border-width: 1px;
+    -fx-border-width: 0 0 1 0;
     -fx-border-radius: 5px;
     -fx-padding: 5px;
     -fx-spacing: 10px;
@@ -64,12 +64,8 @@
 }
 
 .island-hbox {
-    -fx-background-color: #383838;
-    -fx-border-color: #383838;
-    -fx-border-radius: 10;
-    -fx-padding: 10px;
-
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 0, 0, 0, 1);
+    -fx-background-color: #2c2929;
+    -fx-background-radius: 10px;
 }
 
 .text-field, .choice-box {

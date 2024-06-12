@@ -26,18 +26,19 @@
                                 <Label fx:id="spicetifyUiLabel" />
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="376.0">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="376.0" spacing="10.0">
                             <children>
-                        <HBox fx:id="islandHBox" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="152.0">
+                        <HBox fx:id="islandHBox" alignment="CENTER" prefHeight="22.0" prefWidth="152.0">
                            <children>
                               <Button fx:id="uninstallButton" mnemonicParsing="false" onAction="#onUninstall" />
                            </children>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
                         </HBox>
-                                <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#onMinimize" />
-                                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                                      <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#onMinimize" />
+                                      <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
+                           </children>
+                        </HBox>
                             </children>
                         </HBox>
                     </children>
