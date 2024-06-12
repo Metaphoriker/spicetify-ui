@@ -47,9 +47,9 @@ public class CommandExecutor {
 
   private void handleProcessExecution(Process process, Consumer<Process> processConsumer) {
     try {
+      logOutput(process);
       process.waitFor();
       processConsumer.accept(process);
-      logOutput(process);
     } catch (InterruptedException | IOException e) {
       throw new RuntimeException("Error during process execution", e);
     }
@@ -62,6 +62,7 @@ public class CommandExecutor {
 
   private Process createProcess(String command) throws IOException {
     ProcessBuilder processBuilder = new ProcessBuilder(prepareCommand(command));
+    processBuilder.redirectErrorStream(true);
     return processBuilder.start();
   }
 
