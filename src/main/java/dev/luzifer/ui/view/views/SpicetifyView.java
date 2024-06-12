@@ -9,6 +9,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
@@ -24,6 +26,8 @@ public class SpicetifyView extends BaseSpicetifyView<SpicetifyViewModel> {
   @FXML private ChoiceBox<String> themeBox;
   @FXML private CheckBox updateCheckBox;
   @FXML private Button applyButton;
+  @FXML private HBox islandHBox;
+  @FXML private Button uninstallButton;
 
   public SpicetifyView(SpicetifyViewModel viewModel) {
     super(viewModel);
@@ -40,15 +44,30 @@ public class SpicetifyView extends BaseSpicetifyView<SpicetifyViewModel> {
     addTooltipToUpdateCheckBox();
     setIcon();
     setupThemeBox();
+    setIslandStyling();
+    setUninstallButtonIcon();
   }
 
   @FXML
   void onApply(ActionEvent event) {
     getViewModel().applyTheme();
   }
+  
+  @FXML
+  void onUninstall(ActionEvent event) {
+    getViewModel().uninstall();
+  }
 
   private void addTooltipToUpdateCheckBox() {
     updateCheckBox.setTooltip(new Tooltip("Update Spicetify before applying the theme (Recommended)")); // TODO: later from messages.properties
+  }
+  
+  private void setIslandStyling() {
+    islandHBox.getStyleClass().add("island-hbox");
+  }
+  
+  private void setUninstallButtonIcon() {
+    uninstallButton.setGraphic(new ImageView(new Image("/uninstall.png")));
   }
 
   private void bindProperties() {

@@ -13,4 +13,11 @@ public class SpicetifyCommands {
       "curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.sh | sh";
   public static final String OTHER_INSTALL_MARKETPLACE =
       "curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.sh | sh";
+  public static final String SPICEITFY_RESTORE = "spicetify restore";
+  public static final String DELETE_APPDATA_SPICETIFY_WINDOWS =
+      "rmdir -r -fo $env:APPDATA\\spicetify";
+  public static final String DELETE_LOCALAPPDATA_SPICETIFY_WINDOWS =
+      "rmdir -r -fo $env:LOCALAPPDATA\\spicetify";
+  public static final String DELETE_APPDATA_SPICETIFY_OTHER = "rm -rf ~/.spicetify";
+  public static final String DELETE_LOCALAPPDATA_SPICETIFY_OTHER = "rm -rf ~/.config/spicetify";
 }

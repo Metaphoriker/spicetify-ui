@@ -63,6 +63,15 @@
     -fx-text-fill: #403c3c;
 }
 
+.island-hbox {
+    -fx-background-color: #383838;
+    -fx-border-color: #383838;
+    -fx-border-radius: 10;
+    -fx-padding: 10px;
+
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 0, 0, 0, 1);
+}
+
 .text-field, .choice-box {
     -fx-background-color: #383838;
     -fx-border-color: linear-gradient(to top, #E84B3D, #F68F27);

@@ -1,5 +1,6 @@
 package dev.luzifer.ui.view.viewmodel;
 
+import dev.luzifer.Main;
 import dev.luzifer.model.FileSystemWatcher;
 import dev.luzifer.model.SpicetifyCommands;
 import dev.luzifer.ui.view.viewmodel.utils.ThemeManager;
@@ -46,6 +47,19 @@ public class SpicetifyViewModel extends BaseViewModel {
     updateSpicetifyIfNecessary();
     setCurrentTheme();
     executeCommandAndUpdateProgress(SpicetifyCommands.APPLY);
+  }
+
+  public void uninstall() {
+    progressMaxProperty.set(3);
+    executeCommandAndUpdateProgress(SpicetifyCommands.SPICEITFY_RESTORE);
+
+    if (Main.isWindows()) {
+      executeCommandAndUpdateProgress(SpicetifyCommands.DELETE_APPDATA_SPICETIFY_WINDOWS);
+      executeCommandAndUpdateProgress(SpicetifyCommands.DELETE_LOCALAPPDATA_SPICETIFY_WINDOWS);
+    } else {
+      executeCommandAndUpdateProgress(SpicetifyCommands.DELETE_APPDATA_SPICETIFY_OTHER);
+      executeCommandAndUpdateProgress(SpicetifyCommands.DELETE_LOCALAPPDATA_SPICETIFY_OTHER);
+    }
   }
 
   private int calculateTotalSteps() {

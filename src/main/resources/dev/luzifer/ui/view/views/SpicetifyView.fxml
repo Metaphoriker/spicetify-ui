@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.luzifer.ui.view.views.SpicetifyView">
+<VBox fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.luzifer.ui.view.views.SpicetifyView">
     <children>
         <VBox>
             <children>
@@ -28,6 +28,14 @@
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="376.0">
                             <children>
+                        <HBox fx:id="islandHBox" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="152.0">
+                           <children>
+                              <Button fx:id="uninstallButton" mnemonicParsing="false" onAction="#onUninstall" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </HBox>
                                 <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#onMinimize" />
                                 <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onClose" />
                             </children>
