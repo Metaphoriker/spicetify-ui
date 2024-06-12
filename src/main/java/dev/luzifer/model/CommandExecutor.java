@@ -32,23 +32,32 @@ public class CommandExecutor {
   }
 
   public void executeCommand(String command, Runnable callback, Consumer<Process> processConsumer) {
+    log.info("Executing command: " + command);
     try {
       Process process = createProcess(command);
-      CompletableFuture.runAsync(
-              () -> {
-                try {
-                  process.waitFor();
-                  processConsumer.accept(process);
-                  logOutput(process);
-                } catch (InterruptedException | IOException e) {
-                  throw new RuntimeException(e);
-                }
-              },
-              EXECUTOR)
-          .thenRun(callback);
+      CompletableFuture<Void> processFuture =
+          CompletableFuture.runAsync(
+              () -> handleProcessExecution(process, processConsumer), EXECUTOR);
+
+      processFuture.thenRun(callback).exceptionally(this::handleExecutionException);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException("Failed to execute command: " + command, e);
     }
+  }
+
+  private void handleProcessExecution(Process process, Consumer<Process> processConsumer) {
+    try {
+      process.waitFor();
+      processConsumer.accept(process);
+      logOutput(process);
+    } catch (InterruptedException | IOException e) {
+      throw new RuntimeException("Error during process execution", e);
+    }
+  }
+
+  private Void handleExecutionException(Throwable e) {
+    log.error("Error while executing command", e);
+    return null;
   }
 
   private Process createProcess(String command) throws IOException {
