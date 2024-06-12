@@ -67,7 +67,8 @@ public class SpicetifyView extends BaseSpicetifyView<SpicetifyViewModel> {
   }
   
   private void setupUninstallButton() {
-    uninstallButton.setGraphic(new ImageView(new Image("/uninstall.png")));
+    uninstallButton.getStyleClass().add("icon-button");
+    uninstallButton.setGraphic(downTrimmedImageView(new ImageView(new Image("/uninstall.png"))));
     uninstallButton.setTooltip(new Tooltip("Uninstall Spicetify - you can reinstall it with this UI again")); // TODO: later from messages.properties
   }
 
