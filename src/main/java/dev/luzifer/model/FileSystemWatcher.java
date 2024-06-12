@@ -4,6 +4,7 @@ import dev.luzifer.Main;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -14,7 +15,7 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.function.Consumer;
 
-@Log
+@Slf4j
 @RequiredArgsConstructor
 public class FileSystemWatcher implements Runnable {
 
@@ -44,7 +45,7 @@ public class FileSystemWatcher implements Runnable {
       }
 
     } catch (IOException | InterruptedException e) {
-      log.severe("Error while watching file system: " + e.getMessage());
+      log.error("Error while watching themes folder", e);
     }
   }
 }

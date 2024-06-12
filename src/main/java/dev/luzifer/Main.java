@@ -3,12 +3,12 @@ package dev.luzifer;
 import dev.luzifer.model.SpicetifyService;
 import dev.luzifer.ui.SpicetifyClient;
 import javafx.application.Application;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;
 import java.util.List;
 
-@Log
+@Slf4j
 public class Main {
 
   private static final SpicetifyService SPICETIFY_SERVICE = new SpicetifyService();

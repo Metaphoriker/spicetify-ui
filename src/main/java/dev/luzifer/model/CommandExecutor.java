@@ -1,6 +1,7 @@
 package dev.luzifer.model;
 
 import dev.luzifer.Main;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
+@Slf4j
 public class CommandExecutor {
 
   private static final Executor EXECUTOR =
@@ -59,7 +61,7 @@ public class CommandExecutor {
         new BufferedReader(new InputStreamReader(process.getInputStream()))) {
       String line;
       while ((line = reader.readLine()) != null) {
-        System.out.println(line);
+        log.info(line);
       }
     }
   }

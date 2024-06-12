@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
-@Log
+@Slf4j
 public class SpicetifyService {
 
   private static final Path APPDATA_FOLDER = Path.of(System.getenv("APPDATA"));
@@ -36,7 +37,7 @@ public class SpicetifyService {
           .findFirst()
           .orElse(null);
     } catch (IOException e) {
-      log.warning("Could not find any images in the theme folder of " + theme + " theme");
+      log.error("Could not find image file", e);
       return null;
     }
   }
@@ -73,7 +74,7 @@ public class SpicetifyService {
         }
       }
     } catch (Exception e) {
-      log.severe("Could not read from config file");
+      log.error("Could not read from config file", e);
     }
     return null;
   }
@@ -83,7 +84,7 @@ public class SpicetifyService {
       String content = key + "=" + value;
       Files.writeString(SPICETIFY_UI_CONFIG_FILE, content);
     } catch (Exception e) {
-      log.severe("Could not write to config file");
+      log.error("Could not write to config file", e);
     }
   }
 
@@ -97,7 +98,7 @@ public class SpicetifyService {
       try {
         SPICETIFY_UI_CONFIG_FILE.toFile().createNewFile();
       } catch (Exception e) {
-        log.severe("Could not create config file");
+        log.error("Could not create config file", e);
       }
     }
   }

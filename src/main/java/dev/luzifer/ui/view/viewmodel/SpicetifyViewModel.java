@@ -12,9 +12,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
-@Log
+@Slf4j
 public class SpicetifyViewModel extends BaseViewModel {
 
   private final StringProperty currentThemeProperty = new SimpleStringProperty();
