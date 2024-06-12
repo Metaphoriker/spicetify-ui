@@ -45,7 +45,7 @@ public class SpicetifyView extends BaseSpicetifyView<SpicetifyViewModel> {
     setIcon();
     setupThemeBox();
     setIslandStyling();
-    setUninstallButtonIcon();
+    setupUninstallButton();
   }
 
   @FXML
@@ -66,8 +66,9 @@ public class SpicetifyView extends BaseSpicetifyView<SpicetifyViewModel> {
     islandHBox.getStyleClass().add("island-hbox");
   }
   
-  private void setUninstallButtonIcon() {
+  private void setupUninstallButton() {
     uninstallButton.setGraphic(new ImageView(new Image("/uninstall.png")));
+    uninstallButton.setTooltip(new Tooltip("Uninstall Spicetify - you can reinstall it with this UI again")); // TODO: later from messages.properties
   }
 
   private void bindProperties() {
