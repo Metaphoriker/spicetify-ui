@@ -4,10 +4,11 @@ import dev.luzifer.Main;
 import dev.luzifer.model.FileSystemWatcher;
 import dev.luzifer.model.SpicetifyCommands;
 import dev.luzifer.ui.view.viewmodel.utils.ThemeManager;
+
+import java.awt.*;
 import java.util.function.Consumer;
-import javafx.beans.property.BooleanProperty;
+
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -18,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 public class SpicetifyViewModel extends BaseViewModel {
 
   private final StringProperty currentThemeProperty = new SimpleStringProperty();
-  private final BooleanProperty updateBeforeApplyProperty = new SimpleBooleanProperty(true);
   private final ObjectProperty<ObservableList<String>> themesProperty =
       new SimpleObjectProperty<>(ThemeManager.getThemes());
 
@@ -41,10 +41,19 @@ public class SpicetifyViewModel extends BaseViewModel {
     return ThemeManager.getLastTheme();
   }
 
+  public void openThemeFolder() {
+    Desktop desktop = Desktop.getDesktop();
+    try {
+      desktop.open(Main.getThemeFolder().toFile());
+    } catch (Exception e) {
+      log.error("Error while opening the themes folder", e);
+    }
+  }
+
   public void applyTheme() {
-    int totalSteps = calculateTotalSteps();
+    int totalSteps = 4;
     progressMaxProperty.set(totalSteps);
-    updateSpicetifyIfNecessary();
+    updateSpicetify();
     setCurrentTheme();
     executeCommandAndUpdateProgress(SpicetifyCommands.APPLY);
   }
@@ -62,24 +71,13 @@ public class SpicetifyViewModel extends BaseViewModel {
     }
   }
 
-  private int calculateTotalSteps() {
-    int totalSteps = 3;
-    return updateBeforeApplyProperty.get() ? ++totalSteps : totalSteps;
-  }
-
-  private void updateSpicetifyIfNecessary() {
-    if (updateBeforeApplyProperty.get()) {
-      executeCommandAndUpdateProgress(SpicetifyCommands.UPDATE);
-      executeCommandAndUpdateProgress(SpicetifyCommands.BACKUP_APPLY);
-    }
+  private void updateSpicetify() {
+    executeCommandAndUpdateProgress(SpicetifyCommands.UPDATE);
+    executeCommandAndUpdateProgress(SpicetifyCommands.BACKUP_APPLY);
   }
 
   public void saveTheme() {
     ThemeManager.saveTheme(currentThemeProperty.get());
-  }
-
-  public BooleanProperty updateBeforeApplyProperty() {
-    return updateBeforeApplyProperty;
   }
 
   public StringProperty currentThemeProperty() {
